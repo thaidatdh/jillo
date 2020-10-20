@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Register from './components/login/register/register';
+import LoginIndex from './components/login/login-index';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LoginIndex formState="logidn"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

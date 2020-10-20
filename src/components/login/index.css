@@ -1,0 +1,142 @@
+.form-container {
+   display: block;
+   height: 100vh;
+   padding-top: 2em;
+   text-align: center;
+   background: url("https://funretro.io/img/crossword.png");
+}
+.form-container h1 {
+   position: relative;
+   margin: 0;
+   margin-top: 1em;
+   margin-bottom: 1em;
+   font-family: 'thirsty_script_extrabold_deRg';
+   font-size: 3em;
+   color: #8e24aa;
+}
+.form input[type='text'] {
+   text-align: left;
+}
+.form {
+   width: 400px;
+   padding: 2em;
+   margin: auto;
+   margin-bottom: 40px;
+   background: white;
+   border-radius: .125rem;
+   box-shadow: 0 4px 20px 0 rgba(0,0,0,0.1);
+}
+.form.h2 {
+   display: block;
+   font-size: 1.5em;
+   margin-block-start: 0.83em;
+   margin-block-end: 0.83em;
+   margin-inline-start: 0px;
+   margin-inline-end: 0px;
+   font-weight: bold;
+}
+.form .form-group {
+   text-align: left;
+}
+
+.form input:active, .form input:focus {
+    padding-bottom: 3px;
+    border-bottom: 2px solid #8e24aa;
+}
+input {
+    width: 100%;
+    padding: 3px 5px;
+    background: white;
+    border: 1px solid #d6d6d6;
+}
+.form input {
+   display: block;
+   width: 100%;
+   padding: 4px 0;
+   margin-bottom: 1.625rem;
+   font-size: 1rem;
+   font-weight: 400;
+   line-height: 1.5;
+   color: #000;
+   background-color: transparent;
+   background-image: none;
+   border: 0;
+   border-bottom: 1px solid #d8d2cf;
+   outline: 0;
+   transition: border-color .2s;
+}
+.form input:active, .form input:focus {
+   padding-bottom: 3px;
+   border-bottom: 2px solid #8e24aa;
+}
+.hint {
+   position: relative;
+   top: -20px;
+   margin: 0;
+   font-size: .9em;
+}
+small {
+   margin-left: .5em;
+   font-size: 1em;
+   color: #777;
+}
+.form input[type='checkbox'] {
+   display: inline-block;
+   width: auto;
+   margin: 7px 5px;
+}
+.form button, .form .button {
+   display: inline-block;
+   width: 100%;
+   box-sizing: border-box;
+   padding: 10px;
+   margin: 0;
+   margin-top: 20px;
+   font-size: 1rem;
+   color: white;
+   text-align: center;
+}
+
+.form button, .form .button {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 0;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+}
+button.first, .button.first {
+    min-width: 80px;
+    background: #8e24aa;
+    border-bottom: 2px solid #9c27b0;
+}
+button, .button {
+   width: auto;
+   padding: 5px 8px;
+   margin-left: 10px;
+   font-family: 'Roboto',sans-serif;
+   color: white;
+   cursor: pointer;
+   background: #9c27b0;
+   border: 0;
+   border-bottom: 2px solid #8e24aa;
+   border-radius: 2px;
+}
+.form .google-login {
+   display: block;
+   width: 100%;
+   padding: 10px 0;
+   margin: 10px 0;
+   font-size: 1rem;
+   color: white;
+   background: #cd5441;
+   border-bottom: 2px solid #cd5441;
+   border-radius: 2px;
+}
+button:disabled, .button:disabled {
+   cursor: not-allowed;
+   opacity: .65;
+}
