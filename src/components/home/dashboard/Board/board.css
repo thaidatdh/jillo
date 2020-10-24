@@ -1,0 +1,133 @@
+.dashboard-item {
+  display: inline-block;
+  min-width: 16%;
+  max-width: 275px;
+  margin: 10px;
+  vertical-align: top;
+  cursor: pointer;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(192,208,230,0.5);
+}
+.dashboard-item a {
+  text-decoration: none;
+  color: inherit;
+}
+.dashboard-item-body {
+  padding: 20px;
+}
+.dashboard-item-body p {
+  word-break: break-all;
+}
+.board-name {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: normal;
+}
+.board-date {
+  font-size: .9em;
+  color: #999;
+}
+.board-date i {
+  margin-right: 10px;
+}
+.dashboard-board .tag {
+  float: right;
+  padding: 0;
+  color: #999;
+  background: white;
+}
+.tag {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: .5em;
+  margin-bottom: 1em;
+  font-size: .9em;
+  background: #ddd;
+  border-radius: 3px;
+}
+.dashboard-item ul {
+  list-style: none;
+}
+.board-small {
+  padding: 10px 20px;
+  clear: both;
+  border-top: 1px solid #f1f1f1;
+}
+ul {
+  padding-left: 0;
+  margin-top: 0;
+}
+.board-small .board-small-column {
+  position: relative;
+  width: 35px;
+  margin-right: 7px;
+  vertical-align: top;
+}
+.board-small li {
+  display: inline-block;
+  font-size: .7em;
+}
+.board-small .board-small-column-name {
+  position: absolute;
+  top: 7px;
+  left: 3px;
+  z-index: 10;
+  display: none;
+  min-width: 60px;
+  padding: 5px;
+  color: white;
+  text-align: center;
+  pointer-events: none;
+  background: #333;
+  border-radius: 3px;
+}
+.board-small .column {
+  display: flex;
+  margin: 5px 0;
+  flex-direction: column;
+}
+.column {
+  flex: 1;
+}
+.board-small .front {
+  width: 100%;
+  min-height: 7px !important;
+}
+.board-small li {
+  display: inline-block;
+  font-size: .7em;
+}
+.front_1, .back_1 {
+  background: #009688;
+}
+.board-actions {
+  position: relative;
+  display: flex;
+  vertical-align: bottom;
+  justify-content: space-between;
+  border-top: 1px solid #f1f1f1;
+}
+.board-actions a {
+  display: flex;
+  width: 100%;
+  padding: 8px;
+  font-size: .85em;
+  color: #8e24aa;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.dashboard-item a {
+  text-decoration: none;
+  color: inherit;
+}
+.board-actions a i {
+  margin-right: 5px;
+}
+.front_2, .back_2 {
+  background: #e91e63;
+}
+.front_3, .back_3 {
+  background:#8e24aa;
+}
