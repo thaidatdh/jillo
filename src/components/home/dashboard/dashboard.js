@@ -1,43 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Board from './Board/board';
 import './dashboard.css';
 
 function Dashboard(props) {
-  const tempList = [{
-    _id: '123',
-    name: 'Board 1',
-    owner_id: '123',
-    created_at: '2020-10-24T07:47:00.000Z'
-  },{
-    _id: '124',
-    name: 'Board 2',
-    owner_id: '123',
-    created_at: '2020-10-24T07:47:00.000Z'
-  },{
-    _id: '125',
-    name: 'Board 3',
-    owner_id: '123',
-    created_at: '2020-10-24T07:47:00.000Z'
-  },];
 
-  const [listBoard, setListBoard] = useState(tempList);
+  const [listBoard, setListBoard] = useState([]);
+
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/board', {
+      method: 'GET',
+      headers: new Headers({
+        Accept: "application/json; charset=utf-8"
+      })
+    }).then(res => res.json())
+    .then(response => {
+      setListBoard(response.data);
+    })
+    .catch(error => console.log(error));
+  });
+
   const renderListItems = () => {
     return listBoard.map((item) => <Board board={item}/>);
   }
    return (
       <div>
-        <div class="dashboard ng-scope">
+        <div className="dashboard ng-scope">
       <h1>My boards</h1>
-      <div class="ng-scope">
+      <div className="ng-scope">
         <h2>
           <span>Public boards
             <small>collaborate by sharing URL with people</small>
           </span>
         </h2>
         <ul>
-          <li class="dashboard-item add-item tooltip ng-scope" role="button" tabindex="0">
-            <span class="add">
-              <i class=" fa fa-plus"></i> <small>Add board</small>
+          <li className="dashboard-item add-item tooltip ng-scope" role="button" tabIndex="0">
+            <span className="add">
+              <i className=" fa fa-plus"></i> <small>Add board</small>
             </span>
           </li>
           {renderListItems()}
