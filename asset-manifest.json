@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/jillo/static/css/main.ef7805e4.chunk.css",
+    "main.js": "/jillo/static/js/main.b3dc3eec.chunk.js",
+    "main.js.map": "/jillo/static/js/main.b3dc3eec.chunk.js.map",
+    "runtime-main.js": "/jillo/static/js/runtime-main.8b83d31a.js",
+    "runtime-main.js.map": "/jillo/static/js/runtime-main.8b83d31a.js.map",
+    "static/js/2.754bc6ff.chunk.js": "/jillo/static/js/2.754bc6ff.chunk.js",
+    "static/js/2.754bc6ff.chunk.js.map": "/jillo/static/js/2.754bc6ff.chunk.js.map",
+    "index.html": "/jillo/index.html",
+    "precache-manifest.73f2546c63d5a33226c0b8e6ee1be456.js": "/jillo/precache-manifest.73f2546c63d5a33226c0b8e6ee1be456.js",
+    "service-worker.js": "/jillo/service-worker.js",
+    "static/css/main.ef7805e4.chunk.css.map": "/jillo/static/css/main.ef7805e4.chunk.css.map",
+    "static/js/2.754bc6ff.chunk.js.LICENSE.txt": "/jillo/static/js/2.754bc6ff.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8b83d31a.js",
+    "static/js/2.754bc6ff.chunk.js",
+    "static/css/main.ef7805e4.chunk.css",
+    "static/js/main.b3dc3eec.chunk.js"
+  ]
+}
