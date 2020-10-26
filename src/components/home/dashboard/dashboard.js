@@ -8,7 +8,7 @@ function Dashboard(props) {
 
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/board', {
+    fetch('https://jillo-backend.herokuapp.com/api/board', {
       method: 'GET',
       headers: new Headers({
         Accept: "application/json; charset=utf-8"

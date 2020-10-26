@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import "./board.css";
 const DATE_OPTIONS = { year: "numeric", month: "short", day: "numeric" };
 function Board(props) {
@@ -11,7 +12,7 @@ function Board(props) {
   );
 
   useEffect(() => {
-    const fetchLink = `http://localhost:8080/api/column/board/${board._id}`;
+    const fetchLink = `https://jillo-backend.herokuapp.com/api/column/board/${board._id}`;
     fetch(fetchLink, {
       method: 'GET',
       headers: new Headers({
@@ -26,7 +27,7 @@ function Board(props) {
     if (columns.length === 0)
       return;
     const columnIdList = columns.map(col => col._id);
-    const fetchLinkCards = `http://localhost:8080/api/card/column/columns=${columnIdList}/count`;
+    const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
     fetch(fetchLinkCards, {
       method: 'GET',
       headers: new Headers({
@@ -45,6 +46,10 @@ function Board(props) {
       className="board-small-column ng-scope"
     >
       <span className="board-small-column-name ng-binding">{item.name}</span>
+      <OverlayTrigger 
+      placement="bottom"
+      overlay={<Tooltip id="button-tooltip">{item.name}</Tooltip>}
+      >
       <ul className="column">
         <li className="front"
           style={{background: item.color, width: "100%", minHeight: "7px"}}
@@ -52,6 +57,7 @@ function Board(props) {
           &nbsp;
         </li>
       </ul>
+      </OverlayTrigger>
     </li>
     ) : (
       <li
@@ -75,7 +81,6 @@ function Board(props) {
       id="board_0"
     >
       <a
-        href="/"
       >
         <div className="dashboard-item-body">
           <p className="board-name ng-binding">{board.name}</p>
