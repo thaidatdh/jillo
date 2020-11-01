@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './header.css';
 
 function Header(props) {
@@ -8,7 +9,7 @@ function Header(props) {
           <div className="header-filters">
             <div className="logo" role="button" tabIndex="0">
               <span>
-                Jillo
+                <Link to="/">Jillo</Link>
               </span>
             </div>
           </div>

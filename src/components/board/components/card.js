@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import Popup from "reactjs-popup";
 import "./column.css";
 function Card(props) {
   const backgroundColor = { backgroundColor: props.color };
@@ -19,12 +20,12 @@ function Card(props) {
       return;
     }
     const requestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ desc: tempContent })
+      body: JSON.stringify({ desc: tempContent }),
     };
     fetch(`http://localhost:8080/api/card/${card._id}`, requestOptions)
       .then((res) => res.json())
@@ -36,18 +37,17 @@ function Card(props) {
   };
   const onDelete = () => {
     const requestOptions = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     };
     fetch(`http://localhost:8080/api/card/${card._id}`, requestOptions)
       .then((res) => res.json())
-      .then((response) => {
-      })
+      .then((response) => {})
       .catch((error) => console.log(error));
-  }
+  };
   const renderCardView = (
     <div className="front" style={backgroundColor}>
       <div className="message-main">
@@ -118,18 +118,66 @@ function Card(props) {
           <button className="button-save" onClick={onSave}>
             DONE
           </button>
-          <button
-            className="button-save"
-            aria-label="Delete message"
-            style={{
-              backgroundColor: "white",
-              borderColor: "lightgray",
-              marginLeft: 10,
-            }}
-            onClick={onDelete}
+          <Popup
+            trigger={
+              <button
+                className="button-save"
+                aria-label="Delete message"
+                style={{
+                  backgroundColor: "white",
+                  borderColor: "lightgray",
+                  marginLeft: 10,
+                }}
+              >
+                <FontAwesomeIcon icon={["fas", "trash-alt"]} color="red" />
+              </button>
+            }
+            modal
+            nested
           >
-            <FontAwesomeIcon icon={["fas", "trash-alt"]} color="red" />
-          </button>
+            {(close) => (
+              <div
+                className="modal swal2-popup"
+                style={{ borderColor: "lightgray", borderWidth: 2 }}
+              >
+                <div className="content">
+                  <h2>Are you sure you want to delete?</h2>
+                </div>
+                <div
+                  className="swal2-actions"
+                  style={{
+                    justifyContent: "space-around",
+                    display: "flex",
+                    paddingBottom: 20,
+                  }}
+                >
+                  <button
+                    type="button"
+                    className="swal2-confirm swal2-styled"
+                    aria-label=""
+                    style={{
+                      borderLeftColor: "#e91e63",
+                      borderRightColor: "#e91e63",
+                    }}
+                    onClick={() => {
+                      onDelete();
+                      close();
+                    }}
+                  >
+                    Yes, delete it!
+                  </button>
+                  <button
+                    className="swal2-cancel swal2-styled"
+                    onClick={() => {
+                      close();
+                    }}
+                  >
+                    No. Keep it!
+                  </button>
+                </div>
+              </div>
+            )}
+          </Popup>
         </div>
       </div>
     </div>

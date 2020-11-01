@@ -20,7 +20,7 @@ function Dashboard(props) {
   });
 
   const renderListItems = () => {
-    return listBoard.map((item) => <Board board={item} />);
+    return listBoard.map((item) => <Board key={item._id} board={item} />);
   };
   return (
     <div>

@@ -27,7 +27,21 @@ function Column(props) {
       .catch((error) => console.log(error));
   });
   const handleChangeColorComplete = (colorChanged) => {
-    setColor(colorChanged.hex);
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ color: colorChanged.hex }),
+    };
+    fetch(`http://localhost:8080/api/column/${column._id}`, requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        setColumn(response.data);
+        setColor(response.data.color);
+      })
+      .catch((error) => console.log(error));
   };
   const onEditColNameClick = () => {
     setTempColName(column.name);
@@ -42,12 +56,12 @@ function Column(props) {
       return;
     }
     const requestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: tempColName })
+      body: JSON.stringify({ name: tempColName }),
     };
     fetch(`http://localhost:8080/api/column/${column._id}`, requestOptions)
       .then((res) => res.json())
@@ -63,10 +77,10 @@ function Column(props) {
   const onClickAddNew = () => {
     let nc = newCards.slice();
     let idt = nc.length;
-    while (nc.filter(e => e.id === idt).length > 0) {
+    while (nc.filter((e) => e.id === idt).length > 0) {
       idt = idt + 1;
     }
-    nc.push({ id: idt, content: '', column_id: props.column._id });
+    nc.push({ id: idt, content: "", column_id: props.column._id });
     setNewCards(nc);
   };
   const onChangeNewCard = (index, desc) => {
@@ -92,19 +106,18 @@ function Column(props) {
   const renderNewCards = (cardsList) => {
     let newList = cardsList.slice();
     newList.reverse();
-    return cardsList
-      .map((card, index) => (
-        <CardNew
-          key={"new_" + card.id}
-          color={color}
-          index={index}
-          desc={card.content}
-          column={card.column_id}
-          onClose={onClickCloseNewCard}
-          onSave={onSaveNewCard}
-          onChange={onChangeNewCard}
-        />
-      ));
+    return cardsList.map((card, index) => (
+      <CardNew
+        key={"new_" + card.id}
+        color={color}
+        index={index}
+        desc={card.content}
+        column={card.column_id}
+        onClose={onClickCloseNewCard}
+        onSave={onSaveNewCard}
+        onChange={onChangeNewCard}
+      />
+    ));
   };
   const popoverColorPicker = (
     <Popover id="popover-basic">

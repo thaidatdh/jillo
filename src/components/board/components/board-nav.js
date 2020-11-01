@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import "./board-nav.css";
 function BoardNav(props) {
   const [board, setBoard] = useState({});
@@ -32,7 +33,7 @@ function BoardNav(props) {
     const requestOptions = {
       method: "PUT",
       headers: {
-        'Accept': "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ name: tempBoardName }),
@@ -48,7 +49,7 @@ function BoardNav(props) {
   const onChangeBoardNameInput = (e) => {
     setTempBoardName(e.target.value);
   };
-  return (
+  return !board ? <Redirect to="/"/> :(
     <div>
       <nav menu="" className="ng-scope">
         <div className="menu board-menu" aria-hidden="false">
@@ -80,8 +81,8 @@ function BoardNav(props) {
               value={tempBoardName}
               onChange={onChangeBoardNameInput}
             />
-            <button onClick={onCancelEditBoardName}>Cancel</button>
             <button onClick={onSaveBoardName}>Save</button>
+            <button onClick={onCancelEditBoardName}>Cancel</button>
           </div>
           <input
             id="board-context"
@@ -93,21 +94,15 @@ function BoardNav(props) {
             aria-invalid="false"
           />
           <span className="menu-controls">
-            <button className="normal-button import-btn copy-clipboard ng-scope">
+            <button className="normal-button import-btn copy-clipboard ng-scope" onClick={() => props.onShare()}>
               Share
             </button>
-            <button
+            {/*<button
               className="new-column new-column-desktop"
               aria-hidden="false"
             >
               New column
-            </button>
-            <a
-              className="header-icon settings-icon"
-              aria-label="Open settings sidebar"
-            >
-              <i className="fa fa-gear"></i>
-            </a>
+            </button>*/}
           </span>
         </div>
       </nav>

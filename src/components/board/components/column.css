@@ -184,3 +184,67 @@ a {
 .back a {
   color: #df3e3e;
 }
+.swal2-popup .swal2-actions .swal2-styled {
+  margin: 0;
+}
+.swal2-popup .swal2-styled.swal2-confirm {
+  border: 0;
+  border-radius: .25em;
+  background: initial;
+  background-color: #3085d6;
+  color: #fff;
+  font-size: 1.0625em;
+  justify-self: center;
+}
+.swal2-popup .swal2-styled.swal2-cancel {
+  border-radius: 2px;
+  margin-top: 10px;
+}
+.swal2-popup .swal2-actions .swal2-styled {
+  margin: 0;
+}
+.swal2-popup .swal2-styled.swal2-cancel {
+  border: 0;
+  border-radius: .25em;
+  background: initial;
+  background-color: #aaa;
+  color: #fff;
+  font-size: 1.0625em;
+}
+.swal2-popup .swal2-styled:not([disabled]) {
+  cursor: pointer;
+}
+.swal2-popup .swal2-styled {
+  margin: .3125em;
+  padding: .625em 2em;
+  font-weight: 500;
+  box-shadow: none;
+}
+.modal {
+  font-size: 12px;
+  background-color: white;
+  border-color: gray;
+  border-width: 5px;
+  border-radius: 10px;
+}
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 50px;
+  justify-self: center;
+}
+.modal > .content {
+  width: 100%;
+  padding: 50px 50px 50px 50px;
+  justify-self: center;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 50px 50px 50px 50px;
+  margin: auto;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+}

@@ -5,10 +5,10 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import store from './store'
 import App from './app';
-import BoardMain from './components/board/board-main';
 ReactDOM.render(
   <React.StrictMode>
-    <BoardMain />
+    <App />
+
   </React.StrictMode>,
   document.getElementById('root')
 );
