@@ -8,6 +8,9 @@ function Card(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [tempContent, setTempContent] = useState("");
   const onClickEdit = () => {
+    if(!localStorage.token_id) {
+      return;
+    }
     setIsEditing(true);
     setTempContent(card.desc);
   };
@@ -36,6 +39,9 @@ function Card(props) {
     setIsEditing(false);
   };
   const onDelete = () => {
+    if (localStorage.token_id !== props.boardOwner) {
+      return;
+    }
     const requestOptions = {
       method: "DELETE",
       headers: {
@@ -138,7 +144,7 @@ function Card(props) {
             {(close) => (
               <div
                 className="modal swal2-popup"
-                style={{ borderColor: "lightgray", borderWidth: 2 }}
+                style={{ borderColor: "lightgray", borderWidth: 2, backgroundColor: "lightsteelblue" }}
               >
                 <div className="content">
                   <h2>Are you sure you want to delete?</h2>

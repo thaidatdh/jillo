@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import Board from "./Board/board";
 import "./dashboard.css";
 
 function Dashboard(props) {
   const [listBoard, setListBoard] = useState([]);
-
+  const [isCopyUrl, setIsCopyUrl] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:8080/api/board", {
+    let user_id = localStorage.token_id;
+    console.log(user_id);
+    fetch(`http://localhost:8080/api/board/user/${user_id}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/json; charset=utf-8",
@@ -18,15 +21,37 @@ function Dashboard(props) {
       })
       .catch((error) => console.log(error));
   });
-
+  const onCopyUrl = () => {
+    setIsCopyUrl(true);
+  };
   const renderListItems = () => {
-    return listBoard.map((item) => <Board key={item._id} board={item} />);
+    return listBoard.map((item) => (
+      <Board key={item._id} board={item} onCopy={onCopyUrl} />
+    ));
   };
   return (
     <div>
       <div className="dashboard ng-scope">
         <h1>My boards</h1>
         <div className="ng-scope">
+          {isCopyUrl ? (
+            <Alert
+              variant="success"
+              style={{
+                display: "flex",
+                backgroundColor: "#d4edda",
+                flexDirection: "row-reverse",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingLeft: 50,
+                paddingRight: 50,
+              }}
+            >
+              <p style={{ color: "#155724", textAlign: "center" }}>
+                Board URL copied! Share it with people to collaborate.
+              </p>
+            </Alert>
+          ) : null}
           <h2>
             <span>
               Public boards

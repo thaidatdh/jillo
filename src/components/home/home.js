@@ -7,11 +7,15 @@ import {
   Link,
   useRouteMatch,
   useParams,
+  Redirect,
 } from "react-router-dom";
 import Header from "./header/header";
 import Dashboard from "./dashboard/dashboard";
 import BoardMain from "../board/board-main";
 function Home(props) {
+  if (!localStorage.token_id) {
+    return <Redirect to="/login"/>
+  }
   return (
     <div>
       <Header />

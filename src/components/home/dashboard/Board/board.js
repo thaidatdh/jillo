@@ -1,5 +1,8 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import copy from "copy-to-clipboard";
 import React, { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Popup } from "reactjs-popup";
 import { Link } from "react-router-dom";
 import "./board.css";
 const DATE_OPTIONS = { year: "numeric", month: "short", day: "numeric" };
@@ -41,7 +44,23 @@ function Board(props) {
       })
       .catch((error) => console.log(error));
   });
-
+  const onCopyUrl = () => {
+    props.onCopy();
+    copy(`http://localhost:3000/board/${board._id}`);
+  };
+  const onDelete = () => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    fetch(`http://localhost:8080/api/board/${board._id}`, requestOptions)
+      .then((res) => res.json())
+      .then((response) => {})
+      .catch((error) => console.log(error));
+  };
   const renderListColumns = () => {
     return columns.length > 0 ? (
       columns.map((item) => (
@@ -50,9 +69,8 @@ function Board(props) {
             {item.name}
           </span>
           <OverlayTrigger
-            trigger="focus"
-            placement="bottom"
-            overlay={<Tooltip >{item.name}</Tooltip>}
+            placement="top"
+            overlay={<Tooltip style={{backgroundColor: 'black', color: 'white', padding: 5, marginBottom: 3, borderRadius: 5}}>{item.name}</Tooltip>}
           >
             <ul className="column">
               <li
@@ -96,7 +114,9 @@ function Board(props) {
     >
       <a>
         <div className="dashboard-item-body">
-          <p className="board-name ng-binding"><Link to={link_to}>{board.name}</Link></p>
+          <p className="board-name ng-binding">
+            <Link to={link_to}>{board.name}</Link>
+          </p>
           <p className="ng-binding"></p>
           <span className="board-date ng-binding">
             <i className="fa fa-clock"></i>
@@ -106,28 +126,68 @@ function Board(props) {
         </div>
         <ul className="board-small ng-scope">{renderListColumns()}</ul>
       </a>
-      {/*<div
-        ng-show="userHasAdminRightsBoard(board, {isPublic: true})"
-        className="board-actions"
-        aria-hidden="false"
-      >
-        <a
-          ng-show="!board.archived"
-          className="board-action"
-          ng-click="importExportService.copyURL($event, board.$id, userId)"
-          aria-hidden="false"
-        >
-          <i className="fa fa-copy"></i> URL
+      <div className="board-actions" aria-hidden="false">
+        <a className="board-action" aria-hidden="false" onClick={onCopyUrl}>
+          <FontAwesomeIcon icon="copy" style={{ marginRight: 5 }} /> URL
         </a>
-        <a
-          ng-show="!board.archived"
-          className="board-action"
-          ng-click="cloneBoard($event, null, board.$id, board.boardName, true)"
-          aria-hidden="false"
+
+        <Popup
+          trigger={
+            <a className="board-action" aria-hidden="false">
+              <FontAwesomeIcon icon="trash-alt" style={{ marginRight: 5 }} />{" "}
+              Delete
+            </a>
+          }
+          modal
+          nested
         >
-          <i className="fa fa-clone"></i> CLONE
-        </a>
-      </div>*/}
+          {(close) => (
+            <div
+              className="modal swal2-popup"
+              style={{ borderColor: "black", borderWidth: 10, backgroundColor: "lightsteelblue" }}
+            >
+              <div className="content">
+                <h2 style={{color: 'black'}}>
+                  Are you sure you want to delete <strong>{board.name}</strong>?
+                </h2>
+              </div>
+              <div
+                className="swal2-actions"
+                style={{
+                  justifyContent: "space-around",
+                  display: "flex",
+                  paddingBottom: 20,
+                }}
+              >
+                <button
+                  type="button"
+                  className="swal2-confirm swal2-styled"
+                  aria-label=""
+                  style={{
+                    borderLeftColor: "#e91e63",
+                    borderRightColor: "#e91e63",
+                    backgroundColor: 'red'
+                  }}
+                  onClick={() => {
+                    onDelete();
+                    close();
+                  }}
+                >
+                  Yes, delete it!
+                </button>
+                <button
+                  className="swal2-cancel swal2-styled"
+                  onClick={() => {
+                    close();
+                  }}
+                >
+                  No. Keep it!
+                </button>
+              </div>
+            </div>
+          )}
+        </Popup>
+      </div>
     </li>
   );
 }

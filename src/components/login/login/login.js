@@ -6,10 +6,12 @@ function Login(props) {
   const [isAbleToLogin, setIsAbleToLogin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState("");
   const history = useHistory();
   const onPasswordChange = (text) => {
     setPassword(text);
-    if (text.length > 8 && username.length > 0) {
+    if (text.length >= 8 && username.length > 0) {
       setIsAbleToLogin(true);
     } else {
       setIsAbleToLogin(false);
@@ -17,19 +19,65 @@ function Login(props) {
   };
   const onUsernameChange = (text) => {
     setUsername(text);
-    if (password.length > 8 && text.length > 0) {
+    if (password.length >= 8 && text.length > 0) {
       setIsAbleToLogin(true);
     } else {
       setIsAbleToLogin(false);
     }
   };
   const onLogin = () => {
-    history.push("/");
+    if (password.length < 8 || username.length <= 0) {
+      console.log('error');
+      return;
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: username,
+        password: password,
+      }),
+    };
+    fetch("http://localhost:8080/api/user/signin", requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response);
+        setError(!response.success);
+        console.log(error);
+        if (response.success) {
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("token_id", response.data);
+          history.push("/");
+        } else {
+          setMessage(response.msg);
+        }
+      })
+      .catch((error) => {
+        setError("Error when login");
+        console.log(error);
+      });
   };
   const onLoad = () => {};
   return (
     <form className="form" onLoad={onLoad}>
       <h2>Login</h2>
+      {error ? (
+        <div
+          style={{
+            backgroundColor: "red",
+            color: "darkred",
+            padding: 10,
+            borderRadius: 10,
+            marginTop: 10,
+            marginBottom: 20
+          }}
+        >
+          {message}
+        </div>
+      ) : null}
       <div className="form-group">
         <input
           id="email"
@@ -55,11 +103,16 @@ function Login(props) {
           aria-invalid="true"
           onChange={(text) => onPasswordChange(text.target.value)}
         />
-        <Link to="/forgot-password" className="forgot-password" style={{}}>
+        <Link
+          to="/forgot-password"
+          className="forgot-password"
+          style={{ color: "black" }}
+        >
           Forgot password?
         </Link>
       </div>
       <button
+        type="button"
         className="button first"
         disabled={!isAbleToLogin}
         onClick={onLogin}
@@ -67,12 +120,12 @@ function Login(props) {
         Login
       </button>
       <br />
-      <button className="google-login" ng-click="loginGoogle($event)">
-        Google Login
-      </button>
+      <button className="google-login">Google Login</button>
       <br />
       Or &nbsp;
-      <Link to="/register">Register</Link>
+      <Link to="/register" style={{ color: "black" }}>
+        Register
+      </Link>
     </form>
   );
 }

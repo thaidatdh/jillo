@@ -4,12 +4,13 @@ import "./register.css";
 
 function Register(props) {
   const [isAcceptTerm, setAcceptTerm] = useState(false);
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   //const [isReceiveEmail, setIsReceiveEmail] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const onCheckTerm = (e) => {
     setAcceptTerm(e.target.checked);
   };
@@ -18,32 +19,86 @@ function Register(props) {
   }*/
   const onUsernameChange = (e) => {
     setUsername(e.target.value);
-  }
+  };
   const onNameChange = (e) => {
     setName(e.target.value);
-  }
+  };
   const onEmailChange = (e) => {
     setEmail(e.target.value);
-  }
+  };
   const onPasswordChange = (e) => {
     setPassword(e.target.value);
-  }
+  };
   const onRegister = () => {
-
-  }
+    if (password.length < 8 || username.length <= 0) {
+      return;
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        name: name,
+        password: password,
+        email: email,
+      }),
+    };
+    fetch("http://localhost:8080/api/user/signup", requestOptions)
+      .then((res) => res.json())
+      .then((response) => {
+        setSuccess(response.success);
+        setError(response.msg);
+      })
+      .catch((error) => {
+        setError("Error when register");
+        console.log(error);
+      });
+  };
   return (
     <form
       className="form ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email ng-valid-pattern"
       layout="column"
     >
       <h2>Register</h2>
+      {error && !success ? (
+        <div
+          style={{
+            backgroundColor: "red",
+            color: "darkred",
+            padding: 10,
+            borderRadius: 10,
+            marginTop: 10,
+            marginBottom: 20
+          }}
+        >
+          {error}
+        </div>
+      ) : null}
+      {success ? (
+        <div
+          style={{
+            backgroundColor: "#d4edda",
+            color: "darkred",
+            padding: 10,
+            borderRadius: 10,
+            marginTop: 10,
+            marginBottom: 20
+          }}
+        >
+          {error}
+        </div>
+      ) : null}
+      
       <div className="form-group">
         <input
           id="name"
           maxLength="100"
           type="text"
           placeholder="Name"
-          autocomplete="given-name"
+          autoComplete="given-name"
           required=""
           focus=""
           className="ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
@@ -57,7 +112,7 @@ function Register(props) {
           maxLength="100"
           type="text"
           placeholder="Username"
-          autocomplete="username"
+          autoComplete="username"
           required=""
           className="ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required ng-valid-maxlength"
           aria-invalid="true"
@@ -70,7 +125,7 @@ function Register(props) {
           maxLength="100"
           type="email"
           placeholder="Email"
-          autocomplete="username"
+          autoComplete="username"
           required=""
           className="ng-pristine ng-untouched ng-empty ng-valid-email ng-invalid ng-invalid-required ng-valid-maxlength"
           aria-invalid="true"
@@ -97,7 +152,7 @@ function Register(props) {
         </small>
       </div>
       <div className="form-group">
-        <label for="accept-terms">
+        <label htmlFor="accept-terms">
           <input
             id="accept-terms"
             type="checkbox"
@@ -107,12 +162,16 @@ function Register(props) {
             onChange={onCheckTerm}
           />
           By signing up you agree to our &nbsp;
-          <Link to="/terms">Terms</Link>
+          <Link to="/terms" style={{ color: "black" }}>
+            Terms
+          </Link>
           &nbsp; and &nbsp;
-          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/privacy" style={{ color: "black" }}>
+            Privacy Policy
+          </Link>
         </label>
         <br />
-        {/*<label for="accept-subs">
+        {/*<label htmlFor="accept-subs">
           <input
             id="accept-subs"
             type="checkbox"
@@ -124,15 +183,23 @@ function Register(props) {
   </label>*/}
       </div>
       <br />
-      <button className="button first" disabled={!isAcceptTerm} onClick={onRegister}>
+      <button
+        type="button"
+        className="button first"
+        disabled={!isAcceptTerm}
+        onClick={onRegister}
+      >
         Register
       </button>
       <br />
-      <button className="google-login" disabled={!isAcceptTerm}>
+      <button type="button" className="google-login" disabled={!isAcceptTerm}>
         Google Login
       </button>
       <br />
-      Or <Link to="/login">Login</Link>
+      Or{" "}
+      <Link to="/login" style={{ color: "black" }}>
+        Login
+      </Link>
     </form>
   );
 }

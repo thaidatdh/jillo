@@ -12,3 +12,10 @@ main {
   overflow-x: auto;
   background: #f3f3f3;
 }
+.close {
+  background-color: transparent;
+  color: green;
+  font-size: 25;
+  font-weight: bold;
+  border-width: 0px;
+}

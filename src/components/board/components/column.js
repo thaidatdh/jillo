@@ -100,7 +100,7 @@ function Column(props) {
     let newList = cardsList.slice();
     newList.reverse();
     return newList.map((card) => (
-      <Card key={card._id} color={color} card={card} />
+      <Card key={card._id} color={color} card={card} boardOwner={props.owner} />
     ));
   };
   const renderNewCards = (cardsList) => {
