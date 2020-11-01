@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux'
+import store from './store'
 import App from './app';
+import BoardMain from './components/board/board-main';
 ReactDOM.render(
   <React.StrictMode>
-    <App/>
+    <BoardMain />
   </React.StrictMode>,
   document.getElementById('root')
 );

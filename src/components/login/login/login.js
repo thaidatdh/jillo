@@ -47,7 +47,7 @@ function Login(props) {
         <input
           id="password"
           type="password"
-          maxlength="75"
+          maxLength="75"
           placeholder="Password"
           autocomplete="current-password"
           required=""
