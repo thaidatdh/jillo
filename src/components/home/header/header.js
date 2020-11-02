@@ -1,12 +1,16 @@
 import React from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './header.css';
 
 function Header(props) {
   const onSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('token_id');
+    return <Redirect to="/login"/>
+  }
+  if (!localStorage.token_id) {
+    return <Redirect to="/login"/>
   }
    return (
       <div>

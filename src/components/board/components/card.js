@@ -8,7 +8,7 @@ function Card(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [tempContent, setTempContent] = useState("");
   const onClickEdit = () => {
-    if(!localStorage.token_id) {
+    if (!localStorage.token_id) {
       return;
     }
     setIsEditing(true);
@@ -144,42 +144,56 @@ function Card(props) {
             {(close) => (
               <div
                 className="modal swal2-popup"
-                style={{ borderColor: "lightgray", borderWidth: 2, backgroundColor: "lightsteelblue" }}
+                style={{
+                  borderColor: "lightgray",
+                  borderWidth: 2,
+                  backgroundColor: "#2196f3",
+                }}
               >
                 <div className="content">
-                  <h2>Are you sure you want to delete?</h2>
-                </div>
-                <div
-                  className="swal2-actions"
-                  style={{
-                    justifyContent: "space-around",
-                    display: "flex",
-                    paddingBottom: 20,
-                  }}
-                >
-                  <button
-                    type="button"
-                    className="swal2-confirm swal2-styled"
-                    aria-label=""
+                  <div
                     style={{
-                      borderLeftColor: "#e91e63",
-                      borderRightColor: "#e91e63",
-                    }}
-                    onClick={() => {
-                      onDelete();
-                      close();
+                      backgroundColor: "white",
+                      padding: 20,
+                      borderRadius: 10,
                     }}
                   >
-                    Yes, delete it!
-                  </button>
-                  <button
-                    className="swal2-cancel swal2-styled"
-                    onClick={() => {
-                      close();
-                    }}
-                  >
-                    No. Keep it!
-                  </button>
+                    <h2 style={{ color: "black" }}>
+                      Are you sure you want to delete?
+                    </h2>
+                    <div
+                      style={{
+                        flexDirection: "row",
+                        display: "flex",
+                        justifyContent: "space-around",
+                        marginTop: 10,
+                      }}
+                    >
+                      <button
+                        type="button"
+                        className="swal2-confirm swal2-styled"
+                        aria-label=""
+                        style={{
+                          borderLeftColor: "#e91e63",
+                          borderRightColor: "#e91e63",
+                        }}
+                        onClick={() => {
+                          onDelete();
+                          close();
+                        }}
+                      >
+                        Yes, delete it!
+                      </button>
+                      <button
+                        className="swal2-cancel swal2-styled"
+                        onClick={() => {
+                          close();
+                        }}
+                      >
+                        No. Keep it!
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

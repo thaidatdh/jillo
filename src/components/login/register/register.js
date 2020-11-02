@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "./register.css";
 
 function Register(props) {
@@ -57,6 +57,9 @@ function Register(props) {
         console.log(error);
       });
   };
+  if (localStorage.token_id) {
+    return <Redirect to="/"/>
+  }
   return (
     <form
       className="form ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email ng-valid-pattern"

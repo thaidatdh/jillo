@@ -25,7 +25,11 @@ function Board(props) {
     })
       .then((res) => res.json())
       .then((response) => {
-        setColumns(response.data);
+        let data = response.data.slice();
+        data.sort(function (a, b) {
+          return a.order - b.order;
+        });
+        setColumns(data);
       })
       .catch((error) => console.log(error));
 
@@ -70,7 +74,19 @@ function Board(props) {
           </span>
           <OverlayTrigger
             placement="top"
-            overlay={<Tooltip style={{backgroundColor: 'black', color: 'white', padding: 5, marginBottom: 3, borderRadius: 5}}>{item.name}</Tooltip>}
+            overlay={
+              <Tooltip
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  padding: 5,
+                  marginBottom: 3,
+                  borderRadius: 5,
+                }}
+              >
+                {item.name}
+              </Tooltip>
+            }
           >
             <ul className="column">
               <li
@@ -144,45 +160,56 @@ function Board(props) {
           {(close) => (
             <div
               className="modal swal2-popup"
-              style={{ borderColor: "black", borderWidth: 10, backgroundColor: "lightsteelblue" }}
+              style={{
+                borderColor: "black",
+                borderWidth: 10,
+                backgroundColor: "#2196f3",
+              }}
             >
               <div className="content">
-                <h2 style={{color: 'black'}}>
-                  Are you sure you want to delete <strong>{board.name}</strong>?
-                </h2>
-              </div>
-              <div
-                className="swal2-actions"
-                style={{
-                  justifyContent: "space-around",
-                  display: "flex",
-                  paddingBottom: 20,
-                }}
-              >
-                <button
-                  type="button"
-                  className="swal2-confirm swal2-styled"
-                  aria-label=""
+                <div
                   style={{
-                    borderLeftColor: "#e91e63",
-                    borderRightColor: "#e91e63",
-                    backgroundColor: 'red'
-                  }}
-                  onClick={() => {
-                    onDelete();
-                    close();
+                    backgroundColor: "white",
+                    padding: 20,
+                    borderRadius: 10,
                   }}
                 >
-                  Yes, delete it!
-                </button>
-                <button
-                  className="swal2-cancel swal2-styled"
-                  onClick={() => {
-                    close();
-                  }}
-                >
-                  No. Keep it!
-                </button>
+                  <h2 style={{ color: "black" }}>
+                    Are you sure you want to delete{" "}
+                    <strong>{board.name}</strong>?
+                  </h2>
+                  <div
+                    style={{
+                      flexDirection: "row",
+                      display: "flex",
+                      justifyContent: "space-around",
+                      marginTop: 10,
+                    }}
+                  >
+                    <button
+                      type="button"
+                      className="swal2-confirm swal2-styled"
+                      style={{
+                        marginTop: 10,
+                      }}
+                      onClick={() => {
+                        onDelete();
+                        close();
+                      }}
+                    >
+                      Yes, delete it!
+                    </button>
+                    <button
+                      type="button"
+                      className="swal2-cancel swal2-styled"
+                      onClick={() => {
+                        close();
+                      }}
+                    >
+                      No. Keep it!
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           )}

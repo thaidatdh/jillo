@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import "./login.css";
 
 function Login(props) {
@@ -60,9 +60,11 @@ function Login(props) {
         console.log(error);
       });
   };
-  const onLoad = () => {};
+  if (localStorage.token_id) {
+    return <Redirect to="/"/>
+  }
   return (
-    <form className="form" onLoad={onLoad}>
+    <form className="form" onSubmit={onLogin}>
       <h2>Login</h2>
       {error ? (
         <div

@@ -5,7 +5,7 @@ import BoardNav from "./components/board-nav";
 import Column from "./components/column";
 import { Redirect, useParams } from "react-router-dom";
 import { Alert } from "react-bootstrap";
-import copy from "copy-to-clipboard";
+import copy from "copy-to-clipboard"; 
 function BoardMain(props) {
   const [boardId, setBoardId] = useState(props.boardId);
   const [board, setBoard] = useState({});
@@ -13,7 +13,6 @@ function BoardMain(props) {
   const [isCopyMessageShow, setIsCopyMessageShow] = useState(false);
   
   let { board_id } = useParams();
-  console.log(board_id);
   if (!props.boardId && !boardId) {
     setBoardId(board_id);
   }
@@ -39,7 +38,12 @@ function BoardMain(props) {
     })
       .then((res) => res.json())
       .then((response) => {
-        setColumns(response.data);
+        let data = response.data.slice();
+        data.sort(function (a, b) {
+          return a.order - b.order;
+        });
+        setColumns(data);
+        console.log(data);
       })
       .catch((error) => console.log(error));
   });

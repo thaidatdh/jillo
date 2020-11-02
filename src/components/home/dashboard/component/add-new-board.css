@@ -1,0 +1,222 @@
+.swal2-popup .swal2-actions .swal2-styled {
+  margin: 0;
+}
+.swal2-popup .swal2-styled.swal2-confirm {
+  border: 0;
+  border-radius: .25em;
+  background: initial;
+  background-color: #3085d6;
+  color: #fff;
+  font-size: 1.0625em;
+  justify-self: center;
+}
+.swal2-popup .swal2-styled.swal2-cancel {
+  border-radius: 2px;
+  margin-top: 10px;
+}
+.swal2-popup .swal2-actions .swal2-styled {
+  margin: 0;
+}
+.swal2-popup .swal2-styled.swal2-cancel {
+  border: 0;
+  border-radius: .25em;
+  background: initial;
+  background-color: #aaa;
+  color: #fff;
+  font-size: 1.0625em;
+}
+.swal2-popup .swal2-styled:not([disabled]) {
+  cursor: pointer;
+}
+.swal2-popup .swal2-styled {
+  margin: .3125em;
+  padding: .625em 2em;
+  font-weight: 500;
+  box-shadow: none;
+}
+.modal {
+  font-size: 12px;
+  border-color: gray;
+  border-width: 5px;
+  border-radius: 10px;
+}
+.modal .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 50px;
+  justify-self: center;
+}
+.modal .content {
+  width: 100%;
+  justify-self: center;
+}
+.modal .actions {
+  width: 100%;
+  padding: 5px 5px 5px 5px;
+  margin: auto;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+}
+.create-board-body button.confirm {
+    color: white;
+    background-color: #2cbc63;
+}
+.create-board-body button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 2px;
+    margin-left: 0;
+    font-size: 1.3em;
+    color: #555;
+    text-align: center;
+    background: white;
+    border: 0;
+}
+.form button, .form .button {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 0;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+}
+.form {
+  width: 400px;
+  margin: auto;
+  margin-bottom: 40px;
+  background: white;
+  border-radius: .125rem;
+  box-shadow: 0 4px 20px 0 rgba(0,0,0,0.1);
+}
+.create-board {
+  display: none;
+  width: 470px;
+  padding: 5em;
+  margin: 0;
+  background: white;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+  transition: all .4s cubic-bezier(0.25,0.8,0.25,1);
+}
+.create-board-show {
+  display: flex;
+  max-height: 95%;
+  overflow-y: auto;
+  flex-direction: column;
+}
+.create-board-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+}
+.create-board-header h1 {
+  margin: 0;
+  color: #444;
+}
+.create-board-body label {
+  margin-bottom: 50px;
+  font-size: 18px;
+}
+.form input {
+  display: block;
+  width: 100%;
+  padding: 4px 0;
+  margin-bottom: 1.625rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  background-color: transparent;
+  background-image: none;
+  border: 0;
+  border-bottom: 1px solid #d8d2cf;
+  outline: 0;
+  transition: border-color .2s;
+}
+input {
+  width: 100%;
+  padding: 3px 5px;
+  background: white;
+  border: 1px solid #d6d6d6;
+}
+input[type='text'], input[type='number'] {
+  width: 100%;
+  font-size: 18px;
+}
+small {
+  margin-left: .5em;
+  font-size: 1em;
+  color: #777;
+}
+.create-board-body label {
+  margin-bottom: 50px;
+  font-size: 18px;
+}
+.template label {
+  margin-bottom: 20px;
+}
+
+.header-select-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 7px;
+  vertical-align: top;
+}
+.header-select-container {
+  margin: 0;
+}
+.board-select-container {
+  width: 100%;
+}
+.form select {
+  width: 100%;
+  margin-top: 5px;
+}
+select.bigger {
+  height: 30px;
+  font-size: 16px;
+}
+select:not(.swal2-select) {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 25px;
+}
+select {
+  width: 130px;
+  padding: 0 7px;
+  font-size: 12px;
+  line-height: normal;
+  vertical-align: top;
+  cursor: pointer;
+  background: linear-gradient(to bottom,#fff 0,#efefef 99%);
+  background-color: white;
+  border: 1px solid #d6d6d6;
+  border-radius: 15px;
+  outline: 0;
+}
+.template .columns {
+  position: relative;
+}
+template .columns.template ul {
+  padding-left: 20px;
+  margin-bottom: 0;
+  list-style: bullet;
+}
+ul {
+  padding-left: 0;
+  margin-top: 0;
+}
+.template .columns.template li {
+  padding-bottom: 8px;
+  font-size: 16px;
+  vertical-align: top;
+  align-content: center;
+}

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import Board from "./Board/board";
+import { Popup } from "reactjs-popup";
+import AddNewBoard from './component/add-new-board'
 import "./dashboard.css";
 
 function Dashboard(props) {
@@ -8,7 +11,6 @@ function Dashboard(props) {
   const [isCopyUrl, setIsCopyUrl] = useState(false);
   useEffect(() => {
     let user_id = localStorage.token_id;
-    console.log(user_id);
     fetch(`http://localhost:8080/api/board/user/${user_id}`, {
       method: "GET",
       headers: new Headers({
@@ -29,6 +31,21 @@ function Dashboard(props) {
       <Board key={item._id} board={item} onCopy={onCopyUrl} />
     ));
   };
+  const AddNewItem = (
+    <li
+      className="dashboard-item add-item tooltip ng-scope"
+      role="button"
+      tabIndex="0"
+    >
+      <span className="add">
+        <i className=" fa fa-plus"></i> <small>Add board</small>
+      </span>
+    </li>
+  );
+
+  if (!localStorage.token_id) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div>
       <div className="dashboard ng-scope">
@@ -59,15 +76,9 @@ function Dashboard(props) {
             </span>
           </h2>
           <ul>
-            <li
-              className="dashboard-item add-item tooltip ng-scope"
-              role="button"
-              tabIndex="0"
-            >
-              <span className="add">
-                <i className=" fa fa-plus"></i> <small>Add board</small>
-              </span>
-            </li>
+            <Popup trigger={AddNewItem} modal nested>
+              {(close) => <AddNewBoard onClose={close} />}
+            </Popup>
             {renderListItems()}
           </ul>
         </div>

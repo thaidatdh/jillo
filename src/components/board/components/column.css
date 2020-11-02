@@ -196,6 +196,10 @@ a {
   font-size: 1.0625em;
   justify-self: center;
 }
+.swal2-popup .swal2-styled.swal2-confirm {
+  border-radius: 2px;
+  margin-top: 10px;
+}
 .swal2-popup .swal2-styled.swal2-cancel {
   border-radius: 2px;
   margin-top: 10px;
@@ -227,7 +231,7 @@ a {
   border-width: 5px;
   border-radius: 10px;
 }
-.modal > .header {
+.modal .header {
   width: 100%;
   border-bottom: 1px solid gray;
   font-size: 18px;
@@ -235,14 +239,14 @@ a {
   padding: 50px;
   justify-self: center;
 }
-.modal > .content {
+.modal .content {
   width: 100%;
-  padding: 50px 50px 50px 50px;
+  padding: 5px 5px 5px 5px;
   justify-self: center;
 }
-.modal > .actions {
+.modal .actions {
   width: 100%;
-  padding: 50px 50px 50px 50px;
+  padding: 5px 5px 5px 5px;
   margin: auto;
   text-align: center;
   justify-content: space-around;
