@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import "./profile.css";
 import Header from "../home/header/header";
+import { Redirect } from "react-router-dom";
 const DATE_OPTIONS = { year: "numeric", month: "long", day: "numeric" };
 function Profile(props) {
   const [user, setUser] = useState({});
