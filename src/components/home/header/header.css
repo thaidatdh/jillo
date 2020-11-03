@@ -54,12 +54,31 @@ header .header-icon {
   cursor: pointer;
   align-items: center;
 }
+.dropdown-header {
+  /*display: block;
+  justify-self: center;
+  justify-content: center;
+  margin-bottom: 0;
+  font-size: .875rem;
+  color: #6c757d;
+  white-space: nowrap;*/
+    display: block;
+    padding: 5px 20px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    line-height: 2.5em;
+    color: #777;
+    background: #efefef;
+    border-bottom: 1px solid #efefef;
+    border-radius: 4px 4px 0 0;
+}
 .user-menu {
-  position: relative;
+  /*position: relative;
   top: 2px;
   padding-right: 3px;
   margin-left: 10px;
-  vertical-align: top;
+  vertical-align: top;*/
+  font-weight: bold;
 }
 .user-photo {
   display: inline-block;

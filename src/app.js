@@ -8,6 +8,7 @@ import {
 import LoginIndex from "./components/login/login-index";
 import Home from './components/home/home'
 import BoardMain from "./components/board/board-main";
+import Profile from './components/profile/profile';
 export default function App() {
   return (
     <Router>
@@ -20,6 +21,9 @@ export default function App() {
           </Route>
           <Route path="/register">
             <LoginIndex formState="register" />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           <Route path="/board/:board_id">
             <BoardMain />

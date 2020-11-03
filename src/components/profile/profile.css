@@ -1,0 +1,85 @@
+.form-tabs {
+  position: relative;
+  border: 1px solid #ccc;
+  box-shadow: none;
+  margin: 20px auto 40px;
+}
+.form {
+  width: 400px;
+  padding: 2em;
+  margin: auto;
+  margin-bottom: 40px;
+  background: white;
+  border-radius: .125rem;
+  box-shadow: 0 4px 20px 0 rgba(0,0,0,0.1);
+  margin-top: 5%;
+}
+.tabs {
+  width: 150px;
+  position: absolute;
+  top: -1px;
+  left: -150px;
+}
+.tabs a:first-child {
+  border-top: 1px solid #ccc;
+}
+.tabs a.active {
+  border-left: 4px solid #8e24aa;
+  padding-left: 11px;
+  border-right: 1px solid white;
+  font-family: 'RobotoBold';
+}
+.tabs a {
+  background: white;
+  color: #333;
+  border: 1px solid #ccc;
+  border-top: 0;
+  display: block;
+  padding: 12px 10px;
+  padding-left: 13px;
+  text-align: center;
+  margin: 0;
+}
+.form .form-group {
+  text-align: left;
+}
+.form input {
+  display: block;
+  width: 100%;
+  padding: 4px 0;
+  margin-bottom: 1.625rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  background-color: transparent;
+  background-image: none;
+  border: 0;
+  border-bottom: 1px solid #d8d2cf;
+  outline: 0;
+  transition: border-color .2s;
+}
+strong {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-size: 1.2em;
+}
+.form a {
+  color: #8e24aa;
+}
+.form button, .form .button {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+}
+button.first, .button.first {
+  min-width: 80px;
+  background: #8e24aa;
+  border-bottom: 2px solid #9c27b0;
+}
