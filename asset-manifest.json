@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/jillo/static/css/main.ef7805e4.chunk.css",
-    "main.js": "/jillo/static/js/main.b55fa2ea.chunk.js",
-    "main.js.map": "/jillo/static/js/main.b55fa2ea.chunk.js.map",
+    "main.css": "/jillo/static/css/main.69c2b23c.chunk.css",
+    "main.js": "/jillo/static/js/main.e4453ec6.chunk.js",
+    "main.js.map": "/jillo/static/js/main.e4453ec6.chunk.js.map",
     "runtime-main.js": "/jillo/static/js/runtime-main.8b83d31a.js",
     "runtime-main.js.map": "/jillo/static/js/runtime-main.8b83d31a.js.map",
-    "static/js/2.78f291ea.chunk.js": "/jillo/static/js/2.78f291ea.chunk.js",
-    "static/js/2.78f291ea.chunk.js.map": "/jillo/static/js/2.78f291ea.chunk.js.map",
+    "static/js/2.6bea4681.chunk.js": "/jillo/static/js/2.6bea4681.chunk.js",
+    "static/js/2.6bea4681.chunk.js.map": "/jillo/static/js/2.6bea4681.chunk.js.map",
     "index.html": "/jillo/index.html",
-    "precache-manifest.3e42437df49417a02b554a42ba431feb.js": "/jillo/precache-manifest.3e42437df49417a02b554a42ba431feb.js",
+    "precache-manifest.07a5ef8026614a11151e166827aa784b.js": "/jillo/precache-manifest.07a5ef8026614a11151e166827aa784b.js",
     "service-worker.js": "/jillo/service-worker.js",
-    "static/css/main.ef7805e4.chunk.css.map": "/jillo/static/css/main.ef7805e4.chunk.css.map",
-    "static/js/2.78f291ea.chunk.js.LICENSE.txt": "/jillo/static/js/2.78f291ea.chunk.js.LICENSE.txt"
+    "static/css/main.69c2b23c.chunk.css.map": "/jillo/static/css/main.69c2b23c.chunk.css.map",
+    "static/js/2.6bea4681.chunk.js.LICENSE.txt": "/jillo/static/js/2.6bea4681.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8b83d31a.js",
-    "static/js/2.78f291ea.chunk.js",
-    "static/css/main.ef7805e4.chunk.css",
-    "static/js/main.b55fa2ea.chunk.js"
+    "static/js/2.6bea4681.chunk.js",
+    "static/css/main.69c2b23c.chunk.css",
+    "static/js/main.e4453ec6.chunk.js"
   ]
 }
