@@ -25,7 +25,8 @@ function Login(props) {
       setIsAbleToLogin(false);
     }
   };
-  const onLogin = () => {
+  const onLogin = (e) => {
+    e.preventDefault();
     if (password.length < 8 || username.length <= 0) {
       console.log('error');
       return;
@@ -114,10 +115,10 @@ function Login(props) {
         </Link>
       </div>
       <button
-        type="button"
+        type="submit"
         className="button first"
         disabled={!isAbleToLogin}
-        onClick={onLogin}
+        /*onClick={onLogin}*/
       >
         Login
       </button>

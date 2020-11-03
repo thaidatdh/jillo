@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import "./header.css";
 
 function Header(props) {
   const [name, setName] = useState("");
+  const history = useHistory();
   const onSignOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("token_id");
-    return <Redirect to="/login" />;
+    history.push("/login");
   };
   useEffect(() => {
     if (localStorage.token) {
@@ -22,7 +23,7 @@ function Header(props) {
     }
   }, []);
   if (!localStorage.token_id) {
-    return <Redirect to="/login" />;
+    return history.push("/login");
   }
 
   return (

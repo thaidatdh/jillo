@@ -29,7 +29,8 @@ function Register(props) {
   const onPasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  const onRegister = () => {
+  const onRegister = (e) => {
+    e.preventDefault();
     if (password.length < 8 || username.length <= 0) {
       return;
     }
@@ -64,6 +65,7 @@ function Register(props) {
     <form
       className="form ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email ng-valid-pattern"
       layout="column"
+      onSubmit={onRegister}
     >
       <h2>Register</h2>
       {error && !success ? (
@@ -187,10 +189,10 @@ function Register(props) {
       </div>
       <br />
       <button
-        type="button"
+        type="submit"
         className="button first"
         disabled={!isAcceptTerm}
-        onClick={onRegister}
+        /*onClick={onRegister}*/
       >
         Register
       </button>

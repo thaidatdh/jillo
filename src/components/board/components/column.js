@@ -39,7 +39,7 @@ function Column(props) {
       .then((res) => res.json())
       .then((response) => {
         setColumn(response.data);
-        setColor(response.data.color);
+        setColor(colorChanged.hex);
       })
       .catch((error) => console.log(error));
   };
@@ -55,6 +55,7 @@ function Column(props) {
       setIsEditingColumnName(false);
       return;
     }
+    setColumn({ name: tempColName });
     const requestOptions = {
       method: "PUT",
       headers: {

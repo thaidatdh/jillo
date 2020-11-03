@@ -16,7 +16,13 @@ function Profile(props) {
   const [successMsg, setSuccessMsg] = useState("");
   const onChangeName = (e) => {
     let nameChanged = e.target.value;
-    setUser({ name: nameChanged });
+    setUser({
+      name: nameChanged,
+      email: user.email,
+      username: user.username,
+      _id: user._id,
+      created_at: user.created_at,
+    });
   };
   const onChangeEmail = (e) => {
     setNewEmail(e.target.value);
@@ -44,14 +50,16 @@ function Profile(props) {
       UpdatedUser.password = newPwd;
       console.log(UpdatedUser.password);
     }
-    console.log(UpdatedUser);
     const requestOptionsPwd = {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user_id: user._id, password: currentPwd }),
+      body: JSON.stringify({
+        user_id: localStorage.token_id,
+        password: currentPwd,
+      }),
     };
     fetch(`http://localhost:8080/api/user/checkpassword`, requestOptionsPwd)
       .then((res) => res.json())
@@ -67,7 +75,10 @@ function Profile(props) {
             },
             body: JSON.stringify(UpdatedUser),
           };
-          fetch(`http://localhost:8080/api/user/${user._id}`, requestOptions)
+          fetch(
+            `http://localhost:8080/api/user/${localStorage.token_id}`,
+            requestOptions
+          )
             .then((res) => res.json())
             .then((response) => {
               localStorage.token = response.token;
@@ -76,11 +87,11 @@ function Profile(props) {
               let msg =
                 isChangeEmail && isChangePassword
                   ? "Email and Password"
-                  : (isChangeEmail
+                  : isChangeEmail
                   ? "Email"
-                  : (isChangePassword
+                  : isChangePassword
                   ? "Password"
-                  : ""));
+                  : "";
               setSuccessMsg("Updated " + msg);
             })
             .catch((error) => setError("Error when Saving!"));
@@ -238,21 +249,20 @@ function Profile(props) {
               <strong className="ng-binding">{createdAt}</strong>
             </div>
             <br />
-            {isChangePassword || isChangeEmail ? (
-              <div>
-                <input
-                  id="current-password"
-                  type="password"
-                  placeholder="Current Password"
-                  required=""
-                  className="ng-pristine ng-untouched ng-scope ng-not-empty ng-valid ng-valid-required"
-                  aria-invalid="false"
-                  value={currentPwd}
-                  onChange={onChangeCurrentPwd}
-                />
-                <br />
-              </div>
-            ) : null}
+            <div>
+              <input
+                id="current-password"
+                type="password"
+                placeholder="Current Password"
+                required=""
+                className="ng-pristine ng-untouched ng-scope ng-not-empty ng-valid ng-valid-required"
+                aria-invalid="false"
+                value={currentPwd}
+                onChange={onChangeCurrentPwd}
+              />
+              <br />
+            </div>
+
             {error ? (
               <div
                 style={{

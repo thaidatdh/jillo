@@ -22,6 +22,7 @@ function Card(props) {
       setIsEditing(false);
       return;
     }
+    setCard({desc: tempContent});
     const requestOptions = {
       method: "PUT",
       headers: {
