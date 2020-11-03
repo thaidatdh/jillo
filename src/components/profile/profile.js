@@ -196,8 +196,8 @@ function Profile(props) {
                 <div>
                   <br />
                   <input
-                    id="name"
-                    type="text"
+                    id="new-password"
+                    type="password"
                     placeholder="New Password"
                     required=""
                     className="ng-pristine ng-untouched ng-scope ng-not-empty ng-valid ng-valid-required"
@@ -240,8 +240,8 @@ function Profile(props) {
             {isChangePassword || isChangeEmail ? (
               <div>
                 <input
-                  id="name"
-                  type="text"
+                  id="current-password"
+                  type="password"
                   placeholder="Current Password"
                   required=""
                   className="ng-pristine ng-untouched ng-scope ng-not-empty ng-valid ng-valid-required"
