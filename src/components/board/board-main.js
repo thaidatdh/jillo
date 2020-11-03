@@ -18,7 +18,7 @@ function BoardMain(props) {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/board/${boardId}`, {
+    fetch(`https://jillo-backend.herokuapp.com/api/board/${boardId}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/json; charset=utf-8",
@@ -30,7 +30,7 @@ function BoardMain(props) {
       })
       .catch((error) => console.log(error));
     if (!board) return;
-    fetch(`http://localhost:8080/api/column/board/${boardId}`, {
+    fetch(`https://jillo-backend.herokuapp.com/api/column/board/${boardId}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/json; charset=utf-8",
@@ -43,13 +43,12 @@ function BoardMain(props) {
           return a.order - b.order;
         });
         setColumns(data);
-        console.log(data);
       })
       .catch((error) => console.log(error));
   });
   const onShare = () => {
     setIsCopyMessageShow(true);
-    copy(`http://localhost:3000/board/${boardId}`);
+    copy(`https://jillo-frontend.herokuapp.com/board/${boardId}`);
   };
   const renderColumns = (columnList) => {
     return columnList.map((col) => <Column column={col} owner={board.owner_id} />);

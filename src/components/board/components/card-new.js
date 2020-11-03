@@ -21,7 +21,7 @@ function CardNew(props) {
       },
       body: JSON.stringify({ column_id: props.column, desc: tempContent })
     };
-    fetch('http://localhost:8080/api/card', requestOptions)
+    fetch('https://jillo-backend.herokuapp.com/api/card', requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.data)

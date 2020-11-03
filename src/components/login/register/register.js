@@ -47,7 +47,7 @@ function Register(props) {
         email: email,
       }),
     };
-    fetch("http://localhost:8080/api/user/signup", requestOptions)
+    fetch("https://jillo-backend.herokuapp.com/api/user/signup", requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setSuccess(response.success);

@@ -6,7 +6,7 @@ function BoardNav(props) {
   const [tempBoardName, setTempBoardName] = useState("");
   const [isNameText, setIsNameText] = useState(true);
   useEffect(() => {
-    fetch(`http://localhost:8080/api/board/${props.boardId}`, {
+    fetch(`https://jillo-backend.herokuapp.com/api/board/${props.boardId}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/json; charset=utf-8",
@@ -38,7 +38,7 @@ function BoardNav(props) {
       },
       body: JSON.stringify({ name: tempBoardName }),
     };
-    fetch(`http://localhost:8080/api/board/${board._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/board/${board._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setBoard(response.data);

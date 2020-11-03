@@ -48,7 +48,6 @@ function Profile(props) {
     }
     if (isChangePassword && newPwd !== "" && newPwd.length > 8) {
       UpdatedUser.password = newPwd;
-      console.log(UpdatedUser.password);
     }
     const requestOptionsPwd = {
       method: "POST",
@@ -61,7 +60,7 @@ function Profile(props) {
         password: currentPwd,
       }),
     };
-    fetch(`http://localhost:8080/api/user/checkpassword`, requestOptionsPwd)
+    fetch(`https://jillo-backend.herokuapp.com/api/user/checkpassword`, requestOptionsPwd)
       .then((res) => res.json())
       .then((response) => {
         let isCorrectPwd = response.success;
@@ -76,7 +75,7 @@ function Profile(props) {
             body: JSON.stringify(UpdatedUser),
           };
           fetch(
-            `http://localhost:8080/api/user/${localStorage.token_id}`,
+            `https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`,
             requestOptions
           )
             .then((res) => res.json())

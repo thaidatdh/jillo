@@ -31,7 +31,7 @@ function Card(props) {
       },
       body: JSON.stringify({ desc: tempContent }),
     };
-    fetch(`http://localhost:8080/api/card/${card._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/card/${card._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setCard(response.data);
@@ -50,7 +50,7 @@ function Card(props) {
         "Content-Type": "application/json",
       },
     };
-    fetch(`http://localhost:8080/api/card/${card._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/card/${card._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {})
       .catch((error) => console.log(error));

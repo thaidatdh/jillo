@@ -42,12 +42,10 @@ function Login(props) {
         password: password,
       }),
     };
-    fetch("http://localhost:8080/api/user/signin", requestOptions)
+    fetch("https://jillo-backend.herokuapp.com/api/user/signin", requestOptions)
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
         setError(!response.success);
-        console.log(error);
         if (response.success) {
           localStorage.setItem("token", response.token);
           localStorage.setItem("token_id", response.data);

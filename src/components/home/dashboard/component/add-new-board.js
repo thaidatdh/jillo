@@ -30,7 +30,7 @@ function AddNewBoard(props) {
       },
       body: JSON.stringify({ name: name, owner_id: owner_id }),
     };
-    fetch("http://localhost:8080/api/board", requestOptions)
+    fetch("https://jillo-backend.herokuapp.com/api/board", requestOptions)
       .then((res) => res.json())
       .then((response) => {
         if (response.data) {
@@ -49,7 +49,7 @@ function AddNewBoard(props) {
                 order: col.order
               }),
             };
-            fetch("http://localhost:8080/api/column", requestOptionsCol)
+            fetch("https://jillo-backend.herokuapp.com/api/column", requestOptionsCol)
               .then((resCol) => resCol.json())
               .then((responseCol) => {
                 onClose();

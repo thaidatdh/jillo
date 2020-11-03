@@ -16,7 +16,7 @@ function Board(props) {
   );
 
   useEffect(() => {
-    const fetchLink = `http://localhost:8080/api/column/board/${board._id}`;
+    const fetchLink = `https://jillo-backend.herokuapp.com/api/column/board/${board._id}`;
     fetch(fetchLink, {
       method: "GET",
       headers: new Headers({
@@ -35,7 +35,7 @@ function Board(props) {
 
     if (columns.length === 0) return;
     const columnIdList = columns.map((col) => col._id);
-    const fetchLinkCards = `http://localhost:8080/api/card/column/columns=${columnIdList}/count`;
+    const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
     fetch(fetchLinkCards, {
       method: "GET",
       headers: new Headers({
@@ -50,7 +50,7 @@ function Board(props) {
   });
   const onCopyUrl = () => {
     props.onCopy();
-    copy(`http://localhost:3000/board/${board._id}`);
+    copy(`https://jillo-frontend.herokuapp.com/board/${board._id}`);
   };
   const onDelete = () => {
     const requestOptions = {
@@ -60,7 +60,7 @@ function Board(props) {
         "Content-Type": "application/json",
       },
     };
-    fetch(`http://localhost:8080/api/board/${board._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/board/${board._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {})
       .catch((error) => console.log(error));

@@ -11,7 +11,7 @@ function Dashboard(props) {
   const [isCopyUrl, setIsCopyUrl] = useState(false);
   useEffect(() => {
     let user_id = localStorage.token_id;
-    fetch(`http://localhost:8080/api/board/user/${user_id}`, {
+    fetch(`https://jillo-backend.herokuapp.com/api/board/user/${user_id}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/json; charset=utf-8",

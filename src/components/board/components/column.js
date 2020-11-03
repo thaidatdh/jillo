@@ -14,7 +14,7 @@ function Column(props) {
   const [newCards, setNewCards] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/card/column/${props.column._id}`, {
+    fetch(`https://jillo-backend.herokuapp.com/api/card/column/${props.column._id}`, {
       method: "GET",
       headers: new Headers({
         Accept: "application/json; charset=utf-8",
@@ -35,7 +35,7 @@ function Column(props) {
       },
       body: JSON.stringify({ color: colorChanged.hex }),
     };
-    fetch(`http://localhost:8080/api/column/${column._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/column/${column._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setColumn(response.data);
@@ -64,7 +64,7 @@ function Column(props) {
       },
       body: JSON.stringify({ name: tempColName }),
     };
-    fetch(`http://localhost:8080/api/column/${column._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/column/${column._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {
         setColumn(response.data);
