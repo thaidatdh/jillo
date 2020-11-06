@@ -8,28 +8,30 @@ function CardNew(props) {
     setTempContent(e.target.value);
     props.onChange(props.index, e.target.value);
   };
-  const onSave = () => {
-    if (!tempContent || tempContent.trim() === '') {
+  const onSave = async () => {
+    if (!tempContent || tempContent.trim() === "") {
       props.onClose(props.index);
       return;
     }
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ column_id: props.column, desc: tempContent })
+      body: JSON.stringify({ column_id: props.column, desc: tempContent }),
     };
-    fetch('https://jillo-backend.herokuapp.com/api/card', requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.data)
-          props.onSave(props.index, response.data);
-        else
-          props.onClose(props.index);
-      })
-      .catch((error) => console.log(error));
+    try {
+      let res = await fetch(
+        "https://jillo-backend.herokuapp.com/api/card",
+        requestOptions
+      );
+      let response = await res.json();
+      if (response.data) props.onSave(props.index, response.data);
+      else props.onClose(props.index);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onDelete = () => {
     props.onClose(props.index);

@@ -17,12 +17,12 @@ function Card(props) {
   const onChangeCardContentInput = (e) => {
     setTempContent(e.target.value);
   };
-  const onSave = () => {
+  const onSave = async () => {
     if (tempContent === card.desc) {
       setIsEditing(false);
       return;
     }
-    setCard({desc: tempContent});
+    setCard({ desc: tempContent });
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -31,15 +31,19 @@ function Card(props) {
       },
       body: JSON.stringify({ desc: tempContent }),
     };
-    fetch(`https://jillo-backend.herokuapp.com/api/card/${card._id}`, requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        setCard(response.data);
-      })
-      .catch((error) => console.log(error));
     setIsEditing(false);
+    try {
+      let res = await fetch(
+        `https://jillo-backend.herokuapp.com/api/card/${card._id}`,
+        requestOptions
+      );
+      let response = await res.json();
+      setCard(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const onDelete = () => {
+  const onDelete = async () => {
     if (localStorage.token_id !== props.boardOwner) {
       return;
     }
@@ -50,10 +54,14 @@ function Card(props) {
         "Content-Type": "application/json",
       },
     };
-    fetch(`https://jillo-backend.herokuapp.com/api/card/${card._id}`, requestOptions)
-      .then((res) => res.json())
-      .then((response) => {})
-      .catch((error) => console.log(error));
+    try {
+      let res = await fetch(
+        `https://jillo-backend.herokuapp.com/api/card/${card._id}`,
+        requestOptions
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
   const renderCardView = (
     <div className="front" style={backgroundColor}>

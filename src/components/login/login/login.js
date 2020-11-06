@@ -25,10 +25,10 @@ function Login(props) {
       setIsAbleToLogin(false);
     }
   };
-  const onLogin = (e) => {
+  const onLogin = async (e) => {
     e.preventDefault();
     if (password.length < 8 || username.length <= 0) {
-      console.log('error');
+      console.log("error");
       return;
     }
     const requestOptions = {
@@ -42,25 +42,27 @@ function Login(props) {
         password: password,
       }),
     };
-    fetch("https://jillo-backend.herokuapp.com/api/user/signin", requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        setError(!response.success);
-        if (response.success) {
-          localStorage.setItem("token", response.token);
-          localStorage.setItem("token_id", response.data);
-          history.push("/");
-        } else {
-          setMessage(response.msg);
-        }
-      })
-      .catch((error) => {
-        setError("Error when login");
-        console.log(error);
-      });
+    try {
+      let res = await fetch(
+        "https://jillo-backend.herokuapp.com/api/user/signin",
+        requestOptions
+      );
+      let response = await res.json();
+      setError(!response.success);
+      if (response.success) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("token_id", response.data);
+        history.push("/");
+      } else {
+        setMessage(response.msg);
+      }
+    } catch (error) {
+      setError("Error when login");
+      console.log(error);
+    }
   };
   if (localStorage.token_id) {
-    return <Redirect to="/"/>
+    return <Redirect to="/" />;
   }
   return (
     <form className="form" onSubmit={onLogin}>
@@ -73,7 +75,7 @@ function Login(props) {
             padding: 10,
             borderRadius: 10,
             marginTop: 10,
-            marginBottom: 20
+            marginBottom: 20,
           }}
         >
           {message}

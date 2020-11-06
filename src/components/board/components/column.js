@@ -14,34 +14,45 @@ function Column(props) {
   const [newCards, setNewCards] = useState([]);
 
   useEffect(() => {
-    fetch(`https://jillo-backend.herokuapp.com/api/card/column/${props.column._id}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json; charset=utf-8",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
+    const fetchCard = async () => {
+      try {
+        let res = await fetch(
+          `https://jillo-backend.herokuapp.com/api/card/column/${props.column._id}`,
+          {
+            method: "GET",
+            headers: new Headers({
+              Accept: "application/json; charset=utf-8",
+            }),
+          }
+        );
+        let response = await res.json();
         setCards(response.data);
-      })
-      .catch((error) => console.log(error));
-  });
-  const handleChangeColorComplete = (colorChanged) => {
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ color: colorChanged.hex }),
+      } catch (error) {
+        console.log(error);
+      }
     };
-    fetch(`https://jillo-backend.herokuapp.com/api/column/${column._id}`, requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        setColumn(response.data);
-        setColor(colorChanged.hex);
-      })
-      .catch((error) => console.log(error));
+    fetchCard();
+  });
+  const handleChangeColorComplete = async (colorChanged) => {
+    setColor(colorChanged.hex);
+    try {
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ color: colorChanged.hex }),
+      };
+      let res = await fetch(
+        `https://jillo-backend.herokuapp.com/api/column/${column._id}`,
+        requestOptions
+      );
+      let response = await res.json();
+      setColumn(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onEditColNameClick = () => {
     setTempColName(column.name);
@@ -50,12 +61,13 @@ function Column(props) {
   const onCancelEditColName = () => {
     setIsEditingColumnName(false);
   };
-  const onSaveColName = () => {
+  const onSaveColName = async () => {
     if (tempColName === column.name) {
       setIsEditingColumnName(false);
       return;
     }
     setColumn({ name: tempColName });
+    setIsEditingColumnName(false);
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -64,23 +76,29 @@ function Column(props) {
       },
       body: JSON.stringify({ name: tempColName }),
     };
-    fetch(`https://jillo-backend.herokuapp.com/api/column/${column._id}`, requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        setColumn(response.data);
-      })
-      .catch((error) => console.log(error));
-    setIsEditingColumnName(false);
+    try {
+      let res = await fetch(
+        `https://jillo-backend.herokuapp.com/api/column/${column._id}`,
+        requestOptions
+      );
+      let response = await res.json();
+      setColumn(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onChangeColNameInput = (e) => {
     setTempColName(e.target.value);
   };
   const onClickAddNew = () => {
     let nc = newCards.slice();
-    let idt = nc.length;
-    while (nc.filter((e) => e.id === idt).length > 0) {
-      idt = idt + 1;
-    }
+    let idt = Math.max.apply(
+      Math,
+      nc.map(function (o) {
+        return o.id;
+      })
+    );
+    idt = idt + 1;
     nc.push({ id: idt, content: "", column_id: props.column._id });
     setNewCards(nc);
   };

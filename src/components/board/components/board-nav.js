@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import "./board-nav.css";
 function BoardNav(props) {
   const [board, setBoard] = useState({});
   const [tempBoardName, setTempBoardName] = useState("");
   const [isNameText, setIsNameText] = useState(true);
+  const history = useHistory();
   useEffect(() => {
-    fetch(`https://jillo-backend.herokuapp.com/api/board/${props.boardId}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json; charset=utf-8",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
+    const onLoad = async () => {
+      if (props.board) {
+        setBoard(props.board);
+        return;
+      }
+      try {
+        let res = await fetch(
+          `https://jillo-backend.herokuapp.com/api/board/${props.boardId}`,
+          {
+            method: "GET",
+            headers: new Headers({
+              Accept: "application/json; charset=utf-8",
+            }),
+          }
+        );
+        let response = await res.json();
         setBoard(response.data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+      } catch (error) {
+        history.push("/");
+      }
+    };
+    onLoad();
+  });
   const onChangeBoardName = () => {
     setIsNameText(false);
     setTempBoardName(board.name);
@@ -25,31 +37,37 @@ function BoardNav(props) {
   const onCancelEditBoardName = () => {
     setIsNameText(true);
   };
-  const onSaveBoardName = () => {
+  const onSaveBoardName = async () => {
     if (tempBoardName === board.name) {
       setIsNameText(true);
       return;
     }
-    const requestOptions = {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: tempBoardName }),
-    };
-    fetch(`https://jillo-backend.herokuapp.com/api/board/${board._id}`, requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        setBoard(response.data);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const requestOptions = {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: tempBoardName }),
+      };
+      let res = await fetch(
+        `https://jillo-backend.herokuapp.com/api/board/${board._id}`,
+        requestOptions
+      );
+      let response = await res.json();
+      setBoard(response.data);
+    } catch (error) {
+      console.log(error);
+    }
     setIsNameText(true);
   };
   const onChangeBoardNameInput = (e) => {
     setTempBoardName(e.target.value);
   };
-  return !board ? <Redirect to="/"/> :(
+  return !board ? (
+    <Redirect to="/" />
+  ) : (
     <div>
       <nav menu="" className="ng-scope">
         <div className="menu board-menu" aria-hidden="false">
@@ -94,7 +112,10 @@ function BoardNav(props) {
             aria-invalid="false"
           />
           <span className="menu-controls">
-            <button className="normal-button import-btn copy-clipboard ng-scope" onClick={() => props.onShare()}>
+            <button
+              className="normal-button import-btn copy-clipboard ng-scope"
+              onClick={() => props.onShare()}
+            >
               Share
             </button>
             {/*<button

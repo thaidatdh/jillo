@@ -3,25 +3,32 @@ import { Alert } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import Board from "./Board/board";
 import { Popup } from "reactjs-popup";
-import AddNewBoard from './component/add-new-board'
+import AddNewBoard from "./component/add-new-board";
 import "./dashboard.css";
 
 function Dashboard(props) {
   const [listBoard, setListBoard] = useState([]);
   const [isCopyUrl, setIsCopyUrl] = useState(false);
   useEffect(() => {
-    let user_id = localStorage.token_id;
-    fetch(`https://jillo-backend.herokuapp.com/api/board/user/${user_id}`, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json; charset=utf-8",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
+    const fetchBoard = async () => {
+      let user_id = localStorage.token_id;
+      try {
+        let res = await fetch(
+          `https://jillo-backend.herokuapp.com/api/board/user/${user_id}`,
+          {
+            method: "GET",
+            headers: new Headers({
+              Accept: "application/json; charset=utf-8",
+            }),
+          }
+        );
+        let response = await res.json();
         setListBoard(response.data);
-      })
-      .catch((error) => console.log(error));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBoard();
   });
   const onCopyUrl = () => {
     setIsCopyUrl(true);

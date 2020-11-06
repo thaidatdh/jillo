@@ -34,35 +34,39 @@ function Profile(props) {
     setNewPwd(e.target.value);
   };
   const onUpdate = () => {
-    if (newPwd && newPwd.length < 8) {
-      setError("Please enter password with atleast 8 characters");
-      return;
-    }
-    let UpdatedUser = {
-      name: user.name,
-      password: null,
-      email: null,
-    };
-    if (isChangeEmail && newEmail !== "" && newEmail !== user.email) {
-      UpdatedUser.email = newEmail;
-    }
-    if (isChangePassword && newPwd !== "" && newPwd.length > 8) {
-      UpdatedUser.password = newPwd;
-    }
-    const requestOptionsPwd = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: localStorage.token_id,
-        password: currentPwd,
-      }),
-    };
-    fetch(`https://jillo-backend.herokuapp.com/api/user/checkpassword`, requestOptionsPwd)
-      .then((res) => res.json())
-      .then((response) => {
+    const onUpdateData = async () => {
+      if (newPwd && newPwd.length < 8) {
+        setError("Please enter password with atleast 8 characters");
+        return;
+      }
+      let UpdatedUser = {
+        name: user.name,
+        password: null,
+        email: null,
+      };
+      if (isChangeEmail && newEmail !== "" && newEmail !== user.email) {
+        UpdatedUser.email = newEmail;
+      }
+      if (isChangePassword && newPwd !== "" && newPwd.length > 8) {
+        UpdatedUser.password = newPwd;
+      }
+      const requestOptionsPwd = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: localStorage.token_id,
+          password: currentPwd,
+        }),
+      };
+      try {
+        let res = await fetch(
+          `https://jillo-backend.herokuapp.com/api/user/checkpassword`,
+          requestOptionsPwd
+        );
+        let response = await res.json();
         let isCorrectPwd = response.success;
         if (isCorrectPwd) {
           setError("");
@@ -74,31 +78,29 @@ function Profile(props) {
             },
             body: JSON.stringify(UpdatedUser),
           };
-          fetch(
+          let resUser = await fetch(
             `https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`,
             requestOptions
-          )
-            .then((res) => res.json())
-            .then((response) => {
-              localStorage.token = response.token;
-              setUser(UpdatedUser);
-              setError("");
-              let msg =
-                isChangeEmail && isChangePassword
-                  ? "Email and Password"
-                  : isChangeEmail
-                  ? "Email"
-                  : isChangePassword
-                  ? "Password"
-                  : "";
-              setSuccessMsg("Updated " + msg);
-            })
-            .catch((error) => setError("Error when Saving!"));
-        } else {
-          setError(response.msg);
+          );
+          let responseUser = await resUser.json();
+          localStorage.token = responseUser.token;
+          setUser(UpdatedUser);
+          setError("");
+          let msg =
+            isChangeEmail && isChangePassword
+              ? "Email and Password"
+              : isChangeEmail
+              ? "Email"
+              : isChangePassword
+              ? "Password"
+              : "";
+          setSuccessMsg("Updated " + msg);
         }
-      })
-      .catch((error) => setError("Error when Checking current Password!"));
+      } catch (error) {
+        setError("Error when saving!");
+      }
+    };
+    onUpdateData();
   };
   useEffect(() => {
     if (localStorage.token) {
@@ -121,7 +123,7 @@ function Profile(props) {
         // ignore
       }
     }
-  }, []);
+  });
   if (!localStorage.token_id) {
     return <Redirect to="/login" />;
   }

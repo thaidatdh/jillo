@@ -16,37 +16,37 @@ function Board(props) {
   );
 
   useEffect(() => {
-    const fetchLink = `https://jillo-backend.herokuapp.com/api/column/board/${board._id}`;
-    fetch(fetchLink, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json; charset=utf-8",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        let data = response.data.slice();
+    const fetchBoardData = async () => {
+      try {
+        const fetchLink = `https://jillo-backend.herokuapp.com/api/column/board/${board._id}`;
+        let res = await fetch(fetchLink, {
+          method: "GET",
+          headers: new Headers({
+            Accept: "application/json; charset=utf-8",
+          }),
+        });
+        let response = await res.json();
+        let data = await response.data.slice();
         data.sort(function (a, b) {
           return a.order - b.order;
         });
         setColumns(data);
-      })
-      .catch((error) => console.log(error));
-
-    if (columns.length === 0) return;
-    const columnIdList = columns.map((col) => col._id);
-    const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
-    fetch(fetchLinkCards, {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json; charset=utf-8",
-      }),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        setCardNumber(response.data);
-      })
-      .catch((error) => console.log(error));
+        if (data.length === 0) return;
+        const columnIdList = await data.map((col) => col._id);
+        const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
+        let resCol = await fetch(fetchLinkCards, {
+          method: "GET",
+          headers: new Headers({
+            Accept: "application/json; charset=utf-8",
+          }),
+        });
+        let responseCol = await resCol.json();
+        setCardNumber(responseCol.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBoardData();
   });
   const onCopyUrl = () => {
     props.onCopy();
@@ -60,7 +60,10 @@ function Board(props) {
         "Content-Type": "application/json",
       },
     };
-    fetch(`https://jillo-backend.herokuapp.com/api/board/${board._id}`, requestOptions)
+    fetch(
+      `https://jillo-backend.herokuapp.com/api/board/${board._id}`,
+      requestOptions
+    )
       .then((res) => res.json())
       .then((response) => {})
       .catch((error) => console.log(error));

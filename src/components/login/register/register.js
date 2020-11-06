@@ -29,7 +29,7 @@ function Register(props) {
   const onPasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  const onRegister = (e) => {
+  const onRegister = async (e) => {
     e.preventDefault();
     if (password.length < 8 || username.length <= 0) {
       return;
@@ -47,19 +47,21 @@ function Register(props) {
         email: email,
       }),
     };
-    fetch("https://jillo-backend.herokuapp.com/api/user/signup", requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        setSuccess(response.success);
-        setError(response.msg);
-      })
-      .catch((error) => {
-        setError("Error when register");
-        console.log(error);
-      });
+    try {
+      let res = await fetch(
+        "https://jillo-backend.herokuapp.com/api/user/signup",
+        requestOptions
+      );
+      let response = await res.json();
+      setSuccess(response.success);
+      setError(response.msg);
+    } catch (error) {
+      setError("Error when register");
+      console.log(error);
+    }
   };
   if (localStorage.token_id) {
-    return <Redirect to="/"/>
+    return <Redirect to="/" />;
   }
   return (
     <form
@@ -76,7 +78,7 @@ function Register(props) {
             padding: 10,
             borderRadius: 10,
             marginTop: 10,
-            marginBottom: 20
+            marginBottom: 20,
           }}
         >
           {error}
@@ -90,13 +92,12 @@ function Register(props) {
             padding: 10,
             borderRadius: 10,
             marginTop: 10,
-            marginBottom: 20
+            marginBottom: 20,
           }}
         >
           {error}
         </div>
       ) : null}
-      
       <div className="form-group">
         <input
           id="name"
