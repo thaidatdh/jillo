@@ -52,7 +52,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signup",
+        "https://jillo-backend.herokuapp.com/api/user/signup",
         requestOptions
       );
       let response = await res.json();
@@ -63,6 +63,9 @@ function Register(props) {
       console.log(error);
     }
   };
+  const errorGoogle = (response) => {
+    console.log(response);
+  }
   const responseFacebook = async (response) => {
     if (!response.name) {
       return;
@@ -84,7 +87,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signupfacebook",
+        "https://jillo-backend.herokuapp.com/api/user/signupfacebook",
         requestOptions
       );
       let response = await res.json();
@@ -119,7 +122,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signupgoogle",
+        "https://jillo-backend.herokuapp.com/api/user/signupgoogle",
         requestOptions
       );
       let response = await res.json();
@@ -244,11 +247,11 @@ function Register(props) {
             onChange={onCheckTerm}
           />
           By signing up you agree to our &nbsp;
-          <Link to="/terms" style={{ color: "black" }}>
+          <Link to="/" style={{ color: "black" }}>
             Terms
           </Link>
           &nbsp; and &nbsp;
-          <Link to="/privacy" style={{ color: "black" }}>
+          <Link to="/" style={{ color: "black" }}>
             Privacy Policy
           </Link>
         </label>
@@ -278,7 +281,7 @@ function Register(props) {
                 clientId={config.google_auth_client_id + ".apps.googleusercontent.com"}
                 buttonText="Login with Google"
                 onSuccess={signUpGoogle}
-                onFailure={signUpGoogle} ></GoogleLogin>
+                onFailure={errorGoogle} ></GoogleLogin>
       <br />
       <FacebookLogin isDisabled={!isAcceptTerm}
         appId={config.facebook_app_id}

@@ -46,7 +46,7 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signin",
+        "https://jillo-backend.herokuapp.com/api/user/signin",
         requestOptions
       );
       let response = await res.json();
@@ -84,7 +84,7 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signupfacebook",
+        "https://jillo-backend.herokuapp.com/api/user/signupfacebook",
         requestOptions
       );
       let response = await res.json();
@@ -100,6 +100,9 @@ function Login(props) {
       setError("Error when login");
       console.log(error);
     }
+  }
+  const errorGoogle = (response) => {
+    console.log(response);
   }
   const signUpGoogle = async (response) => {
     const googleresponse = {
@@ -119,7 +122,7 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signupgoogle",
+        "https://jillo-backend.herokuapp.com/api/user/signupgoogle",
         requestOptions
       );
       let response = await res.json();
@@ -202,7 +205,7 @@ function Login(props) {
                 clientId={config.google_auth_client_id + ".apps.googleusercontent.com"}
                 buttonText="Login with Google"
                 onSuccess={signUpGoogle}
-                onFailure={signUpGoogle} ></GoogleLogin>
+                onFailure={errorGoogle} ></GoogleLogin>
       <br />
       <FacebookLogin
         appId={config.facebook_app_id}
