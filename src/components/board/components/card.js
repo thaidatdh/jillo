@@ -34,7 +34,7 @@ function Card(props) {
     setIsEditing(false);
     try {
       let res = await fetch(
-        `https://jillo-backend.herokuapp.com/api/card/${card._id}`,
+        `http://localhost:8080/api/card/${card._id}`,
         requestOptions
       );
       let response = await res.json();
@@ -56,7 +56,7 @@ function Card(props) {
     };
     try {
       let res = await fetch(
-        `https://jillo-backend.herokuapp.com/api/card/${card._id}`,
+        `http://localhost:8080/api/card/${card._id}`,
         requestOptions
       );
     } catch (error) {

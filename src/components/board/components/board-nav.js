@@ -14,7 +14,7 @@ function BoardNav(props) {
       }
       try {
         let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/board/${props.boardId}`,
+          `http://localhost:8080/api/board/${props.boardId}`,
           {
             method: "GET",
             headers: new Headers({
@@ -52,7 +52,7 @@ function BoardNav(props) {
         body: JSON.stringify({ name: tempBoardName }),
       };
       let res = await fetch(
-        `https://jillo-backend.herokuapp.com/api/board/${board._id}`,
+        `http://localhost:8080/api/board/${board._id}`,
         requestOptions
       );
       let response = await res.json();

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import "./register.css";
-
+import {config} from '../../../store'
 function Register(props) {
   const [isAcceptTerm, setAcceptTerm] = useState(false);
   const [username, setUsername] = useState("");
@@ -11,6 +13,7 @@ function Register(props) {
   //const [isReceiveEmail, setIsReceiveEmail] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const history = useHistory();
   const onCheckTerm = (e) => {
     setAcceptTerm(e.target.checked);
   };
@@ -49,7 +52,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signup",
+        "http://localhost:8080/api/user/signup",
         requestOptions
       );
       let response = await res.json();
@@ -57,6 +60,79 @@ function Register(props) {
       setError(response.msg);
     } catch (error) {
       setError("Error when register");
+      console.log(error);
+    }
+  };
+  const responseFacebook = async (response) => {
+    if (!response.name) {
+      return;
+    }
+    const fbresponse = {
+      name: response.name,
+      email: response.email,
+      facebook_token: response.userID,
+      photo_link: response.picture.data.url,
+      username: response.email,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fbresponse),
+    };
+    try {
+      let res = await fetch(
+        "http://localhost:8080/api/user/signupfacebook",
+        requestOptions
+      );
+      let response = await res.json();
+      setError(!response.success);
+      if (response.success) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("token_id", response.data);
+        history.push("/");
+      } else {
+        setError(response.msg);
+      }
+    } catch (error) {
+      setError("Error when login");
+      console.log(error);
+    }
+  }
+  const signUpGoogle = async (response) => {
+    const googleresponse = {
+      name: response.profileObj.name,
+      email: response.profileObj.email,
+      google_token: response.googleId,
+      photo_link: response.profileObj.imageUrl,
+      username: response.profileObj.email,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(googleresponse),
+    };
+    try {
+      let res = await fetch(
+        "http://localhost:8080/api/user/signupgoogle",
+        requestOptions
+      );
+      let response = await res.json();
+      setError(!response.success);
+      if (response.success) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("token_id", response.data);
+        history.push("/");
+      } else {
+        setError(response.msg);
+      }
+    } catch (error) {
+      setError("Error when login");
       console.log(error);
     }
   };
@@ -198,9 +274,18 @@ function Register(props) {
         Register
       </button>
       <br />
-      <button type="button" className="google-login" disabled={!isAcceptTerm}>
-        Google Login
-      </button>
+      <GoogleLogin disabled={!isAcceptTerm}
+                clientId={config.google_auth_client_id + ".apps.googleusercontent.com"}
+                buttonText="Login with Google"
+                onSuccess={signUpGoogle}
+                onFailure={signUpGoogle} ></GoogleLogin>
+      <br />
+      <FacebookLogin isDisabled={!isAcceptTerm}
+        appId={config.facebook_app_id}
+        fields="name,email,picture"
+        callback={responseFacebook}
+      />
+      <br />
       <br />
       Or{" "}
       <Link to="/login" style={{ color: "black" }}>

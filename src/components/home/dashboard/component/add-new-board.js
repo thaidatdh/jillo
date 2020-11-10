@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import {Alert} from 'react-bootstrap'
+import { Alert } from "react-bootstrap";
 import "./add-new-board.css";
 
 function AddNewBoard(props) {
@@ -9,8 +9,8 @@ function AddNewBoard(props) {
   const onClose = props.onClose;
   const onNameChange = (e) => {
     setName(e.target.value);
-  }
-  const onCreate = () => {
+  };
+  const onCreate = async () => {
     if (name.length === 0) {
       setError("Please Enter valid Name");
       return;
@@ -30,35 +30,38 @@ function AddNewBoard(props) {
       },
       body: JSON.stringify({ name: name, owner_id: owner_id }),
     };
-    fetch("https://jillo-backend.herokuapp.com/api/board", requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.data) {
-          const board = response.data;
-          columns.forEach((col) => {
-            const requestOptionsCol = {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                name: col.name,
-                color: col.color,
-                board_id: board._id,
-                order: col.order
-              }),
-            };
-            fetch("https://jillo-backend.herokuapp.com/api/column", requestOptionsCol)
-              .then((resCol) => resCol.json())
-              .then((responseCol) => {
-                onClose();
-              })
-              .catch((errorCol) => console.log(errorCol));
-          });
-        }
-      })
-      .catch((error) => console.log(error));
+    try {
+      let res = await fetch(
+        "http://localhost:8080/api/board",
+        requestOptions
+      );
+      let response = await res.json();
+      if (response.data) {
+        const board = response.data;
+        columns.forEach((col) => {
+          const requestOptionsCol = {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: col.name,
+              color: col.color,
+              board_id: board._id,
+              order: col.order,
+            }),
+          };
+          fetch(
+            "http://localhost:8080/api/column",
+            requestOptionsCol
+          );
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    onClose();
   };
   return (
     <div
@@ -86,7 +89,7 @@ function AddNewBoard(props) {
                 justifyContent: "center",
                 paddingLeft: 50,
                 paddingRight: 50,
-                marginBottom: 10
+                marginBottom: 10,
               }}
             >
               <p style={{ color: "darkred", textAlign: "center" }}>{error}</p>

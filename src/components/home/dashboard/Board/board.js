@@ -18,7 +18,7 @@ function Board(props) {
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
-        const fetchLink = `https://jillo-backend.herokuapp.com/api/column/board/${board._id}`;
+        const fetchLink = `http://localhost:8080/api/column/board/${board._id}`;
         let res = await fetch(fetchLink, {
           method: "GET",
           headers: new Headers({
@@ -33,7 +33,7 @@ function Board(props) {
         setColumns(data);
         if (data.length === 0) return;
         const columnIdList = await data.map((col) => col._id);
-        const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
+        const fetchLinkCards = `http://localhost:8080/api/card/column/columns=${columnIdList}/count`;
         let resCol = await fetch(fetchLinkCards, {
           method: "GET",
           headers: new Headers({
@@ -61,7 +61,7 @@ function Board(props) {
       },
     };
     fetch(
-      `https://jillo-backend.herokuapp.com/api/board/${board._id}`,
+      `http://localhost:8080/api/board/${board._id}`,
       requestOptions
     )
       .then((res) => res.json())

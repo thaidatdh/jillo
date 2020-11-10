@@ -63,7 +63,7 @@ function Profile(props) {
       };
       try {
         let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/user/checkpassword`,
+          `http://localhost:8080/api/user/checkpassword`,
           requestOptionsPwd
         );
         let response = await res.json();
@@ -79,7 +79,7 @@ function Profile(props) {
             body: JSON.stringify(UpdatedUser),
           };
           let resUser = await fetch(
-            `https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`,
+            `http://localhost:8080/api/user/${localStorage.token_id}`,
             requestOptions
           );
           let responseUser = await resUser.json();
@@ -123,10 +123,7 @@ function Profile(props) {
         // ignore
       }
     }
-  });
-  if (!localStorage.token_id) {
-    return <Redirect to="/login" />;
-  }
+  },[]);
   return (
     <div>
       <Header />

@@ -5,9 +5,6 @@ import Register from "./register/register";
 
 function LoginIndex(props) {
   const [formState, setFormState] = useState(props.formState);
-  const changeLocation = (directory) => {
-    console.log("change location");
-  };
   const onChangeFormStateLogin = () => {
     setFormState("login");
   };
@@ -22,7 +19,7 @@ function LoginIndex(props) {
     );
   return (
     <span className="form-container">
-      <a onClick={changeLocation("/")}>
+      <a>
         {" "}
         <h1>Jillo</h1>{" "}
       </a>

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import "./login.css";
-
+import {config} from '../../../store'
 function Login(props) {
   const [isAbleToLogin, setIsAbleToLogin] = useState(false);
   const [username, setUsername] = useState("");
@@ -44,7 +46,80 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signin",
+        "http://localhost:8080/api/user/signin",
+        requestOptions
+      );
+      let response = await res.json();
+      setError(!response.success);
+      if (response.success) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("token_id", response.data);
+        history.push("/");
+      } else {
+        setMessage(response.msg);
+      }
+    } catch (error) {
+      setError("Error when login");
+      console.log(error);
+    }
+  };
+  const responseFacebook = async (response) => {
+    if (!response.name) {
+      return;
+    }
+    const fbresponse = {
+      name: response.name,
+      email: response.email,
+      facebook_token: response.userID,
+      photo_link: response.picture.data.url,
+      username: response.email,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fbresponse),
+    };
+    try {
+      let res = await fetch(
+        "http://localhost:8080/api/user/signupfacebook",
+        requestOptions
+      );
+      let response = await res.json();
+      setError(!response.success);
+      if (response.success) {
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("token_id", response.data);
+        history.push("/");
+      } else {
+        setMessage(response.msg);
+      }
+    } catch (error) {
+      setError("Error when login");
+      console.log(error);
+    }
+  }
+  const signUpGoogle = async (response) => {
+    const googleresponse = {
+      name: response.profileObj.name,
+      email: response.profileObj.email,
+      google_token: response.googleId,
+      photo_link: response.profileObj.imageUrl,
+      username: response.profileObj.email,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(googleresponse),
+    };
+    try {
+      let res = await fetch(
+        "http://localhost:8080/api/user/signupgoogle",
         requestOptions
       );
       let response = await res.json();
@@ -86,7 +161,7 @@ function Login(props) {
           id="email"
           type="text"
           placeholder="Username (or Email)"
-          autocomplete="username"
+          autoComplete="username"
           required=""
           focus=""
           className="ng-pristine ng-empty ng-invalid ng-invalid-required ng-touched"
@@ -100,7 +175,7 @@ function Login(props) {
           type="password"
           maxLength="75"
           placeholder="Password"
-          autocomplete="current-password"
+          autoComplete="current-password"
           required=""
           className="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-maxlength"
           aria-invalid="true"
@@ -123,7 +198,18 @@ function Login(props) {
         Login
       </button>
       <br />
-      <button className="google-login">Google Login</button>
+      <GoogleLogin
+                clientId={config.google_auth_client_id + ".apps.googleusercontent.com"}
+                buttonText="Login with Google"
+                onSuccess={signUpGoogle}
+                onFailure={signUpGoogle} ></GoogleLogin>
+      <br />
+      <FacebookLogin
+        appId={config.facebook_app_id}
+        fields="name,email,picture"
+        callback={responseFacebook}
+      />
+      <br />
       <br />
       Or &nbsp;
       <Link to="/register" style={{ color: "black" }}>

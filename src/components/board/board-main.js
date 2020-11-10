@@ -21,7 +21,7 @@ function BoardMain(props) {
     const onLoad = async () => {
       try {
         let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/board/${boardId}`,
+          `http://localhost:8080/api/board/${boardId}`,
           {
             method: "GET",
             headers: new Headers({
@@ -36,7 +36,7 @@ function BoardMain(props) {
           return;
         }
         let resCol = await fetch(
-          `https://jillo-backend.herokuapp.com/api/column/board/${boardId}`,
+          `http://localhost:8080/api/column/board/${boardId}`,
           {
             method: "GET",
             headers: new Headers({
