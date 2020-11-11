@@ -1,38 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { OverlayTrigger, Popover } from "react-bootstrap";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 import { CompactPicker } from "react-color";
 import Card from "./card";
 import CardNew from "./card-new";
 import "./column.css";
 function Column(props) {
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState(props.cards);
   const [column, setColumn] = useState(props.column);
   const [color, setColor] = useState(props.column.color);
   const [isEditingColumnName, setIsEditingColumnName] = useState(false);
   const [tempColName, setTempColName] = useState("");
   const [newCards, setNewCards] = useState([]);
 
-  useEffect(() => {
-    const fetchCard = async () => {
-      try {
-        let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/card/column/${props.column._id}`,
-          {
-            method: "GET",
-            headers: new Headers({
-              Accept: "application/json; charset=utf-8",
-            }),
-          }
-        );
-        let response = await res.json();
-        setCards(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCard();
-  });
   const handleChangeColorComplete = async (colorChanged) => {
     setColor(colorChanged.hex);
     try {
@@ -122,6 +103,27 @@ function Column(props) {
       <Card key={card._id} color={color} card={card} boardOwner={props.owner} />
     ));
   };
+  const renderDragableCards = (cardsList) => {
+    if (!cardsList) return;
+    let newList = cardsList.slice();
+    return newList.map((card, index) =>
+      card === undefined ? null : (
+        <Draggable key={card._id} draggableId={card._id} index={index}>
+          {(provided, snapshot) => (
+            <Card
+              key={card._id}
+              color={color}
+              card={card}
+              index={index}
+              boardOwner={props.owner}
+              provided={provided}
+              snapshot={snapshot}
+            />
+          )}
+        </Draggable>
+      )
+    );
+  };
   const renderNewCards = (cardsList) => {
     let newList = cardsList.slice();
     newList.reverse();
@@ -149,88 +151,99 @@ function Column(props) {
     </Popover>
   );
   return (
-    <span
+    <Droppable
+      droppableId={column._id}
       className="message-list ng-scope selected"
-      data-column-id="1"
-      data-column-index="0"
     >
-      <div className="column-header">
-        <h2
-          className="ng-scope"
-          style={{ flexDirection: "row", display: "inline-flex" }}
+      {(provided, snapshot) => (
+        <span
+          ref={provided.innerRef}
+          className="message-list ng-scope selected"
+          data-column-id="1"
+          data-column-index="0"
         >
-          <span>
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              overlay={popoverColorPicker}
+          <div className="column-header">
+            <h2
+              className="ng-scope"
+              style={{ flexDirection: "row", display: "inline-flex" }}
             >
+              <span>
+                <OverlayTrigger
+                  trigger="click"
+                  placement="bottom"
+                  overlay={popoverColorPicker}
+                >
+                  <div
+                    style={{
+                      backgroundColor: color,
+                      height: 15,
+                      width: 15,
+                      marginRight: 10,
+                      alignSelf: "center",
+                      borderRadius: 5,
+                    }}
+                  />
+                </OverlayTrigger>
+              </span>
+              <span
+                className="column-name ng-binding"
+                role="button"
+                tabIndex="0"
+                onClick={onEditColNameClick}
+                style={{
+                  display: !isEditingColumnName ? "inline-flex" : "none",
+                }}
+              >
+                {column.name}
+              </span>
               <div
                 style={{
-                  backgroundColor: color,
-                  height: 15,
-                  width: 15,
-                  marginRight: 10,
-                  alignSelf: "center",
-                  borderRadius: 5,
+                  flexDirection: "column",
+                  display: !isEditingColumnName ? "none" : "inherit",
                 }}
-              />
-            </OverlayTrigger>
-          </span>
-          <span
-            className="column-name ng-binding"
-            role="button"
-            tabIndex="0"
-            onClick={onEditColNameClick}
-            style={{ display: !isEditingColumnName ? "inline-flex" : "none" }}
-          >
-            {column.name}
-          </span>
-          <div
-            style={{
-              flexDirection: "column",
-              display: !isEditingColumnName ? "none" : "inherit",
-            }}
-          >
-            <input
-              type="text"
-              maxLength="50"
-              style={{ width: 200 }}
-              value={tempColName}
-              onChange={onChangeColNameInput}
-            />
-            <div
-              style={{
-                flexDirection: "row",
-                marginTop: 5,
-                justifyContent: "center",
-              }}
-            >
-              <button onClick={onSaveColName}>Save</button>
-              <button onClick={onCancelEditColName}>Cancel</button>
-            </div>
-          </div>
-        </h2>
+              >
+                <input
+                  type="text"
+                  maxLength="50"
+                  style={{ width: 200 }}
+                  value={tempColName}
+                  onChange={onChangeColNameInput}
+                />
+                <div
+                  style={{
+                    flexDirection: "row",
+                    marginTop: 5,
+                    justifyContent: "center",
+                  }}
+                >
+                  <button onClick={onSaveColName}>Save</button>
+                  <button onClick={onCancelEditColName}>Cancel</button>
+                </div>
+              </div>
+            </h2>
 
-        <button
-          className="add-card ng-scope"
-          aria-label="Add new message"
-          style={{ display: !isEditingColumnName ? "inherit" : "none" }}
-          onClick={onClickAddNew}
-        >
-          <FontAwesomeIcon icon="plus" />
-        </button>
-      </div>
-      <ul
-        className="column"
-        id="1"
-        dragula='"bag-one"'
-        dragula-model="messages"
-      >
-        {renderNewCards(newCards)}
-        {renderCards(cards)}
-      </ul>
-    </span>
+            <button
+              className="add-card ng-scope"
+              aria-label="Add new message"
+              style={{ display: !isEditingColumnName ? "inherit" : "none" }}
+              onClick={onClickAddNew}
+            >
+              <FontAwesomeIcon icon="plus" />
+            </button>
+          </div>
+          <ul
+            className="column"
+            id="1"
+            dragula='"bag-one"'
+            dragula-model="messages"
+          >
+            {renderNewCards(newCards)}
+            {renderDragableCards(props.cards)}
+          </ul>
+          {provided.placeholder}
+        </span>
+      )}
+    </Droppable>
   );
 }
 export default Column;

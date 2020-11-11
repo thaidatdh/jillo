@@ -213,7 +213,12 @@ function Card(props) {
   );
   return (
     <li id={"new_" + props.card._id} className="ng-scope message">
-      <div messageid={"new_" + props.card._id}>
+      <div
+        messageid={"new_" + props.card._id}
+        ref={props.provided.innerRef}
+        {...props.provided.draggableProps}
+        {...props.provided.dragHandleProps}
+      >
         {isEditing ? renderCardEdit : renderCardView}
       </div>
     </li>
