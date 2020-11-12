@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import copy from "copy-to-clipboard";
 import React, { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Popup } from "reactjs-popup";
 import { Link } from "react-router-dom";
+import { Popup } from "reactjs-popup";
 import "./board.css";
 const DATE_OPTIONS = { year: "numeric", month: "short", day: "numeric" };
 function Board(props) {
@@ -18,22 +18,11 @@ function Board(props) {
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
-        const fetchLink = `https://jillo-backend.herokuapp.com/api/column/board/${board._id}`;
-        let res = await fetch(fetchLink, {
-          method: "GET",
-          headers: new Headers({
-            Accept: "application/json; charset=utf-8",
-          }),
-        });
-        let response = await res.json();
-        let data = await response.data.slice();
-        data.sort(function (a, b) {
-          return a.order - b.order;
-        });
+        let data = board.columns.slice();
         setColumns(data);
         if (data.length === 0) return;
         const columnIdList = await data.map((col) => col._id);
-        const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
+        const fetchLinkCards = `http://localhost:8080/api/card/column/columns=${columnIdList}/count`;
         let resCol = await fetch(fetchLinkCards, {
           method: "GET",
           headers: new Headers({
@@ -60,10 +49,7 @@ function Board(props) {
         "Content-Type": "application/json",
       },
     };
-    fetch(
-      `https://jillo-backend.herokuapp.com/api/board/${board._id}`,
-      requestOptions
-    )
+    fetch(`http://localhost:8080/api/board/${board._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {})
       .catch((error) => console.log(error));

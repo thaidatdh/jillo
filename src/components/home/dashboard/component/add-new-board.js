@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Alert } from "react-bootstrap";
 import "./add-new-board.css";
 
@@ -32,7 +32,7 @@ function AddNewBoard(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/board",
+        "http://localhost:8080/api/board",
         requestOptions
       );
       let response = await res.json();
@@ -53,7 +53,7 @@ function AddNewBoard(props) {
             }),
           };
           fetch(
-            "https://jillo-backend.herokuapp.com/api/column",
+            "http://localhost:8080/api/column",
             requestOptionsCol
           );
         });

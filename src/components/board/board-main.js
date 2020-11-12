@@ -1,12 +1,12 @@
+import copy from "copy-to-clipboard";
 import React, { useEffect, useState } from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
+import { Alert } from "react-bootstrap";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import Header from "../home/header/header";
 import "./board-main.css";
 import BoardNav from "./components/board-nav";
 import Column from "./components/column";
-import { Redirect, useParams, useHistory } from "react-router-dom";
-import { Alert } from "react-bootstrap";
-import copy from "copy-to-clipboard";
 function BoardMain(props) {
   const [boardId, setBoardId] = useState(props.boardId);
   const [board, setBoard] = useState({});
@@ -78,7 +78,7 @@ function BoardMain(props) {
         };
         let card_id = itemsRearrange[i]._id;
         fetch(
-          `https://jillo-backend.herokuapp.com/api/card/${card_id}`,
+          `http://localhost:8080/api/card/${card_id}`,
           requestOptions
         ).catch((error) => console.log(error));
       }
@@ -103,7 +103,7 @@ function BoardMain(props) {
         };
         let card_id = result[source.droppableId][i]._id;
         fetch(
-          `https://jillo-backend.herokuapp.com/api/card/${card_id}`,
+          `http://localhost:8080/api/card/${card_id}`,
           requestOptions
         ).catch((error) => console.log(error));
       }
@@ -123,7 +123,7 @@ function BoardMain(props) {
         };
         let card_id = result[destination.droppableId][i]._id;
         fetch(
-          `https://jillo-backend.herokuapp.com/api/card/${card_id}`,
+          `http://localhost:8080/api/card/${card_id}`,
           requestOptions
         ).catch((error) => console.log(error));
       }
@@ -136,15 +136,12 @@ function BoardMain(props) {
   useEffect(() => {
     const onLoad = async () => {
       try {
-        let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/board/${boardId}`,
-          {
-            method: "GET",
-            headers: new Headers({
-              Accept: "application/json; charset=utf-8",
-            }),
-          }
-        );
+        let res = await fetch(`http://localhost:8080/api/board/${boardId}`, {
+          method: "GET",
+          headers: new Headers({
+            Accept: "application/json; charset=utf-8",
+          }),
+        });
         let response = await res.json();
         setBoard(response.data);
         if (!board) {
@@ -152,7 +149,7 @@ function BoardMain(props) {
           return;
         }
         let resCol = await fetch(
-          `https://jillo-backend.herokuapp.com/api/column/board/${boardId}`,
+          `http://localhost:8080/api/column/board/${boardId}`,
           {
             method: "GET",
             headers: new Headers({
@@ -167,30 +164,10 @@ function BoardMain(props) {
         });
         setColumns(data);
         //Load col
-        for (
-          let i = 0;
-          i < data.length /* && Object.keys(items).length < data.length*/;
-          i++
-        ) {
+        for (let i = 0; i < data.length; i++) {
           let column_id = data[i]._id;
-          await fetch(
-            `https://jillo-backend.herokuapp.com/api/card/column/${column_id}`,
-            {
-              method: "GET",
-              headers: new Headers({
-                Accept: "application/json; charset=utf-8",
-              }),
-            }
-          )
-            .then((resC) => resC.json())
-            .then((responseC) => {
-              let dataC = responseC.data.slice();
-              dataC.sort(function (a, b) {
-                return a.order - b.order;
-              });
-              items[column_id] = dataC;
-            })
-            .catch((err) => console.log(err));
+          let dataC = data[i].cards ? data[i].cards.slice() : [];
+          items[column_id] = dataC;
         }
       } catch (error) {
         console.log(error);
@@ -239,9 +216,7 @@ function BoardMain(props) {
           </p>
         </Alert>
       ) : null}
-      <DragDropContext
-        onDragEnd={onDragEnd}
-      >
+      <DragDropContext onDragEnd={onDragEnd}>
         <main
           main-content=""
           className="ng-scope"

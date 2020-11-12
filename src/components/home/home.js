@@ -1,17 +1,10 @@
-import React, { useState } from "react";
-import "./home.css";
+import React from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-  Redirect,
+  Redirect
 } from "react-router-dom";
-import Header from "./header/header";
 import Dashboard from "./dashboard/dashboard";
-import BoardMain from "../board/board-main";
+import Header from "./header/header";
+import "./home.css";
 function Home(props) {
   if (!localStorage.token_id) {
     return <Redirect to="/login"/>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import "./profile.css";
+import React, { useEffect, useState } from "react";
 import Header from "../home/header/header";
-import { Redirect } from "react-router-dom";
+import "./profile.css";
 const DATE_OPTIONS = { year: "numeric", month: "long", day: "numeric" };
 function Profile(props) {
   const [user, setUser] = useState({});
@@ -63,7 +62,7 @@ function Profile(props) {
       };
       try {
         let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/user/checkpassword`,
+          `http://localhost:8080/api/user/checkpassword`,
           requestOptionsPwd
         );
         let response = await res.json();
@@ -79,7 +78,7 @@ function Profile(props) {
             body: JSON.stringify(UpdatedUser),
           };
           let resUser = await fetch(
-            `https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`,
+            `http://localhost:8080/api/user/${localStorage.token_id}`,
             requestOptions
           );
           let responseUser = await resUser.json();

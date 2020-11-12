@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import Board from "./Board/board";
 import { Popup } from "reactjs-popup";
+import Board from "./Board/board";
 import AddNewBoard from "./component/add-new-board";
 import "./dashboard.css";
 
@@ -14,7 +14,7 @@ function Dashboard(props) {
       let user_id = localStorage.token_id;
       try {
         let res = await fetch(
-          `https://jillo-backend.herokuapp.com/api/board/user/${user_id}`,
+          `http://localhost:8080/api/board/user/${user_id}`,
           {
             method: "GET",
             headers: new Headers({

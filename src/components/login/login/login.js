@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { config } from '../../../store';
 import "./login.css";
-import {config} from '../../../store'
 function Login(props) {
   const [isAbleToLogin, setIsAbleToLogin] = useState(false);
   const [username, setUsername] = useState("");
@@ -46,7 +46,7 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signin",
+        "http://localhost:8080/api/user/signin",
         requestOptions
       );
       let response = await res.json();
@@ -84,7 +84,7 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signupfacebook",
+        "http://localhost:8080/api/user/signupfacebook",
         requestOptions
       );
       let response = await res.json();
@@ -122,7 +122,7 @@ function Login(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signupgoogle",
+        "http://localhost:8080/api/user/signupgoogle",
         requestOptions
       );
       let response = await res.json();

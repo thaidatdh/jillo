@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { config } from '../../../store';
 import "./register.css";
-import {config} from '../../../store'
 function Register(props) {
   const [isAcceptTerm, setAcceptTerm] = useState(false);
   const [username, setUsername] = useState("");
@@ -52,7 +52,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signup",
+        "http://localhost:8080/api/user/signup",
         requestOptions
       );
       let response = await res.json();
@@ -87,7 +87,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signupfacebook",
+        "http://localhost:8080/api/user/signupfacebook",
         requestOptions
       );
       let response = await res.json();
@@ -122,7 +122,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "https://jillo-backend.herokuapp.com/api/user/signupgoogle",
+        "http://localhost:8080/api/user/signupgoogle",
         requestOptions
       );
       let response = await res.json();

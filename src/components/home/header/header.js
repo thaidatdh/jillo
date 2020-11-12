@@ -1,7 +1,7 @@
+import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { Link, useHistory } from "react-router-dom";
 import "./header.css";
 
 function Header(props) {

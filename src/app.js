@@ -1,14 +1,9 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import LoginIndex from "./components/login/login-index";
-import Home from './components/home/home'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import BoardMain from "./components/board/board-main";
-import Profile from './components/profile/profile';
+import Home from "./components/home/home";
+import LoginIndex from "./components/login/login-index";
+import Profile from "./components/profile/profile";
 export default function App() {
   return (
     <Router>
@@ -31,7 +26,6 @@ export default function App() {
           <Route path="/">
             <Home />
           </Route>
-
         </Switch>
       </div>
     </Router>

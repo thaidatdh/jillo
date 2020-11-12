@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { Droppable, Draggable } from "react-beautiful-dnd";
 import { CompactPicker } from "react-color";
 import Card from "./card";
 import CardNew from "./card-new";
@@ -26,7 +26,7 @@ function Column(props) {
         body: JSON.stringify({ color: colorChanged.hex }),
       };
       let res = await fetch(
-        `https://jillo-backend.herokuapp.com/api/column/${column._id}`,
+        `http://localhost:8080/api/column/${column._id}`,
         requestOptions
       );
       let response = await res.json();
@@ -59,7 +59,7 @@ function Column(props) {
     };
     try {
       let res = await fetch(
-        `https://jillo-backend.herokuapp.com/api/column/${column._id}`,
+        `http://localhost:8080/api/column/${column._id}`,
         requestOptions
       );
       let response = await res.json();
