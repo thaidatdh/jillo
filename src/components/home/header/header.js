@@ -16,9 +16,17 @@ function Header(props) {
     if (localStorage.token) {
       try {
         let decoded = jwt_decode(localStorage.token);
+        fetch(`http://localhost:8080/api/user/${localStorage.token_id}`, {
+          method: "GET",
+          headers: new Headers({
+            Accept: "application/json; charset=utf-8",
+          }),
+        }).catch(err => history.push("/login"));
         setName(decoded.name);
       } catch (error) {
-        // ignore
+        localStorage.removeItem('token_id');
+        localStorage.removeItem('token');
+        history.push("/login");
       }
     }
   }, []);

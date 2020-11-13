@@ -166,17 +166,11 @@ function BoardMain(props) {
         );
         let responseCol = await resCol.json();
         let data = await responseCol.data.slice();
-        data.sort(function (a, b) {
-          return a.order - b.order;
-        });
         setColumns(data);
         //Load col
         for (let i = 0; i < data.length; i++) {
           let column_id = data[i]._id;
           let dataC = data[i].cards ? data[i].cards.slice() : [];
-          dataC.sort(function (a, b) {
-            return a.order - b.order;
-          });
           items[column_id] = dataC;
         }
       } catch (error) {
