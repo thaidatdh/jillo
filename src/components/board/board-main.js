@@ -61,11 +61,13 @@ function BoardMain(props) {
     }
 
     if (source.droppableId === destination.droppableId) {
+      console.log(getList(source.droppableId));
       const itemsRearrange = reorder(
         getList(source.droppableId),
         source.index,
         destination.index
       );
+      console.log(itemsRearrange);
       for (let i = 0; i < itemsRearrange.length; i++) {
         itemsRearrange[i].order = i + 1;
         const requestOptions = {
@@ -74,15 +76,20 @@ function BoardMain(props) {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ order: i + 1 }),
+          body: JSON.stringify({
+            order: i + 1,
+            column_id: destination.droppableId,
+          }),
         };
         let card_id = itemsRearrange[i]._id;
         fetch(
           `http://localhost:8080/api/card/${card_id}`,
           requestOptions
-        ).catch((error) => console.log(error));
+        ).then(res => res.json()).then(response => console.log(response)).catch((error) => console.log(error));
       }
       items[source.droppableId] = itemsRearrange;
+      console.log(itemsRearrange);
+      console.log(items[source.droppableId]);
     } else {
       const result = move(
         getList(source.droppableId),
@@ -167,6 +174,9 @@ function BoardMain(props) {
         for (let i = 0; i < data.length; i++) {
           let column_id = data[i]._id;
           let dataC = data[i].cards ? data[i].cards.slice() : [];
+          dataC.sort(function (a, b) {
+            return a.order - b.order;
+          });
           items[column_id] = dataC;
         }
       } catch (error) {
