@@ -36,7 +36,7 @@ function Board(props) {
       }
     };
     fetchBoardData();
-  });
+  },[]);
   const onCopyUrl = () => {
     props.onCopy();
     copy(`https://jillo-frontend.herokuapp.com/board/${board._id}`);

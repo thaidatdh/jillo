@@ -14,21 +14,28 @@ function Header(props) {
     if (localStorage.token) {
       try {
         let decoded = jwt_decode(localStorage.token);
-        fetch(`https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`, {
-          method: "GET",
-          headers: new Headers({
-            Accept: "application/json; charset=utf-8",
-          }),
-        }).catch(err => console.log(err));
+        fetch(
+          `https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`,
+          {
+            method: "GET",
+            headers: new Headers({
+              Accept: "application/json; charset=utf-8",
+            }),
+          }
+        ).catch((err) => {
+          console.log(err);
+          localStorage.removeItem("token_id");
+          localStorage.removeItem("token");
+        });
         setName(decoded.name);
       } catch (error) {
-        localStorage.removeItem('token_id');
-        localStorage.removeItem('token');
+        localStorage.removeItem("token_id");
+        localStorage.removeItem("token");
       }
     }
   }, []);
   if (!localStorage.token_id) {
-    return <Redirect to="/login"/>;
+    return <Redirect to="/login" />;
   }
 
   return (

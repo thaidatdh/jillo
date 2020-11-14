@@ -96,13 +96,6 @@ function Column(props) {
     nc = nc.concat(cards.slice());
     setCards(nc);
   };
-  const renderCards = (cardsList) => {
-    let newList = cardsList.slice();
-    newList.reverse();
-    return newList.map((card) => (
-      <Card key={card._id} color={color} card={card} boardOwner={props.owner} />
-    ));
-  };
   const renderDragableCards = (cardsList) => {
     if (!cardsList) return;
     let newList = cardsList.slice();
