@@ -32,7 +32,7 @@ function AddNewBoard(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/board",
+        "https://jillo-backend.herokuapp.com/api/board",
         requestOptions
       );
       let response = await res.json();
@@ -53,7 +53,7 @@ function AddNewBoard(props) {
             }),
           };
           fetch(
-            "http://localhost:8080/api/column",
+            "https://jillo-backend.herokuapp.com/api/column",
             requestOptionsCol
           );
         });

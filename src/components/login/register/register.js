@@ -52,7 +52,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signup",
+        "https://jillo-backend.herokuapp.com/api/user/signup",
         requestOptions
       );
       let response = await res.json();
@@ -87,7 +87,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signupfacebook",
+        "https://jillo-backend.herokuapp.com/api/user/signupfacebook",
         requestOptions
       );
       let response = await res.json();
@@ -122,7 +122,7 @@ function Register(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/user/signupgoogle",
+        "https://jillo-backend.herokuapp.com/api/user/signupgoogle",
         requestOptions
       );
       let response = await res.json();

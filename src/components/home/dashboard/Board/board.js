@@ -22,7 +22,7 @@ function Board(props) {
         setColumns(data);
         if (data.length === 0) return;
         const columnIdList = await data.map((col) => col._id);
-        const fetchLinkCards = `http://localhost:8080/api/card/column/columns=${columnIdList}/count`;
+        const fetchLinkCards = `https://jillo-backend.herokuapp.com/api/card/column/columns=${columnIdList}/count`;
         let resCol = await fetch(fetchLinkCards, {
           method: "GET",
           headers: new Headers({
@@ -49,7 +49,7 @@ function Board(props) {
         "Content-Type": "application/json",
       },
     };
-    fetch(`http://localhost:8080/api/board/${board._id}`, requestOptions)
+    fetch(`https://jillo-backend.herokuapp.com/api/board/${board._id}`, requestOptions)
       .then((res) => res.json())
       .then((response) => {})
       .catch((error) => console.log(error));

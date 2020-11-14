@@ -23,7 +23,7 @@ function CardNew(props) {
     };
     try {
       let res = await fetch(
-        "http://localhost:8080/api/card",
+        "https://jillo-backend.herokuapp.com/api/card",
         requestOptions
       );
       let response = await res.json();

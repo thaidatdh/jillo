@@ -83,7 +83,7 @@ function BoardMain(props) {
         };
         let card_id = itemsRearrange[i]._id;
         fetch(
-          `http://localhost:8080/api/card/${card_id}`,
+          `https://jillo-backend.herokuapp.com/api/card/${card_id}`,
           requestOptions
         ).then(res => res.json()).then(response => console.log(response)).catch((error) => console.log(error));
       }
@@ -110,7 +110,7 @@ function BoardMain(props) {
         };
         let card_id = result[source.droppableId][i]._id;
         fetch(
-          `http://localhost:8080/api/card/${card_id}`,
+          `https://jillo-backend.herokuapp.com/api/card/${card_id}`,
           requestOptions
         ).catch((error) => console.log(error));
       }
@@ -130,7 +130,7 @@ function BoardMain(props) {
         };
         let card_id = result[destination.droppableId][i]._id;
         fetch(
-          `http://localhost:8080/api/card/${card_id}`,
+          `https://jillo-backend.herokuapp.com/api/card/${card_id}`,
           requestOptions
         ).catch((error) => console.log(error));
       }
@@ -143,7 +143,7 @@ function BoardMain(props) {
   useEffect(() => {
     const onLoad = async () => {
       try {
-        let res = await fetch(`http://localhost:8080/api/board/${boardId}`, {
+        let res = await fetch(`https://jillo-backend.herokuapp.com/api/board/${boardId}`, {
           method: "GET",
           headers: new Headers({
             Accept: "application/json; charset=utf-8",
@@ -156,7 +156,7 @@ function BoardMain(props) {
           return;
         }
         let resCol = await fetch(
-          `http://localhost:8080/api/column/board/${boardId}`,
+          `https://jillo-backend.herokuapp.com/api/column/board/${boardId}`,
           {
             method: "GET",
             headers: new Headers({

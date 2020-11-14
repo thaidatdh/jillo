@@ -26,7 +26,7 @@ function Column(props) {
         body: JSON.stringify({ color: colorChanged.hex }),
       };
       let res = await fetch(
-        `http://localhost:8080/api/column/${column._id}`,
+        `https://jillo-backend.herokuapp.com/api/column/${column._id}`,
         requestOptions
       );
       let response = await res.json();
@@ -59,7 +59,7 @@ function Column(props) {
     };
     try {
       let res = await fetch(
-        `http://localhost:8080/api/column/${column._id}`,
+        `https://jillo-backend.herokuapp.com/api/column/${column._id}`,
         requestOptions
       );
       let response = await res.json();

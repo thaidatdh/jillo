@@ -14,7 +14,7 @@ function Dashboard(props) {
       let user_id = localStorage.token_id;
       try {
         let res = await fetch(
-          `http://localhost:8080/api/board/user/${user_id}`,
+          `https://jillo-backend.herokuapp.com/api/board/user/${user_id}`,
           {
             method: "GET",
             headers: new Headers({

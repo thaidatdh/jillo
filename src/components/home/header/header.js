@@ -1,37 +1,34 @@
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import "./header.css";
 
 function Header(props) {
   const [name, setName] = useState("");
-  const history = useHistory();
   const onSignOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("token_id");
-    history.push("/login");
   };
   useEffect(() => {
     if (localStorage.token) {
       try {
         let decoded = jwt_decode(localStorage.token);
-        fetch(`http://localhost:8080/api/user/${localStorage.token_id}`, {
+        fetch(`https://jillo-backend.herokuapp.com/api/user/${localStorage.token_id}`, {
           method: "GET",
           headers: new Headers({
             Accept: "application/json; charset=utf-8",
           }),
-        }).catch(err => history.push("/login"));
+        }).catch(err => console.log(err));
         setName(decoded.name);
       } catch (error) {
         localStorage.removeItem('token_id');
         localStorage.removeItem('token');
-        history.push("/login");
       }
     }
   }, []);
   if (!localStorage.token_id) {
-    return history.push("/login");
+    return <Redirect to="/login"/>;
   }
 
   return (
